@@ -25,7 +25,7 @@ public class PersonaDAOImpl implements PersonaDAO{
     
     @Override
     public void agregarPersona(Persona myPersona) {
-        mySessionFactory.getCurrentSession().saveOrUpdate(myPersona);
+        mySessionFactory.getCurrentSession().save(myPersona);
     }
 
     @Override

@@ -7,6 +7,15 @@ package co.com.primo.ws;
 
 import co.com.primo.model.Persona;
 import co.com.primo.service.PersonaService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.mysql.cj.xdevapi.JsonLiteral;
+import com.mysql.cj.xdevapi.JsonString;
+import com.mysql.cj.xdevapi.JsonValue;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +74,29 @@ public class PersonaWS {
         
         //Retornar la información
         return myResponsePersona;
+    }
+    
+    @RequestMapping(value="/persona/register",method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Persona> registerPerson(InputStream incomingData){
+        StringBuilder builder = new StringBuilder();
+        try{
+            BufferedReader in = new BufferedReader(new InputStreamReader(incomingData));
+            String line = null;
+            while((line=in.readLine())!=null){
+                System.out.println("Line: "+line);
+                builder.append(line);
+            }
+            Gson gson = new Gson();
+            System.out.println("Salida: "+builder.toString());
+            Persona persona = gson.fromJson(builder.toString(), Persona.class);
+            System.out.println("Persona: "+persona.getStrNombre());
+            myPersonaService.agregarPersona(persona);
+            return new ResponseEntity<Persona>(HttpStatus.OK);
+        }catch(Exception e){
+            System.err.print(e);
+            return new ResponseEntity<Persona>(HttpStatus.BAD_REQUEST);
+        }
     }
 }
