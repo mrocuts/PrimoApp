@@ -17,6 +17,7 @@ import co.com.primo.model.Usuario;
 public interface UsuarioDAO {
     public Usuario agregarUsuario(Usuario myUsuario);
     public Usuario traerUsuario(Usuario myUsuario);
+    public Usuario traerUsuario(String myUsuario);
     public Usuario actualizarUsuario(Usuario myUsuario);
     public Usuario login(Usuario myUsuario);
 }

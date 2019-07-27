@@ -35,7 +35,12 @@ public class UsuarioServiceImpl implements UsuarioService{
     public Usuario traerUsuario(Usuario myUsuario) {
         return myUsuarioDAO.traerUsuario(myUsuario);
     }
-
+    
+    @Override
+    public Usuario traerUsuario(String email) {
+        return myUsuarioDAO.traerUsuario(email);
+    }
+    
     @Override
     public Usuario actualizarUsuario(Usuario myUsuario) {
         return myUsuarioDAO.actualizarUsuario(myUsuario);

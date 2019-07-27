@@ -35,7 +35,14 @@ public class UsuarioDAOImpl implements UsuarioDAO{
     public Usuario traerUsuario(Usuario myUsuario) {
         return (Usuario) mySessionFactory.getCurrentSession().get(Usuario.class, myUsuario.getIdUsuario());
     }
-
+    
+    @Override
+    public Usuario traerUsuario(String email) {
+        Query q = mySessionFactory.getCurrentSession().getNamedQuery("Usuario.findByEmail");
+        q.setParameter("strUsuario", email);
+        return (Usuario) q.uniqueResult();
+    }
+    
     @Override
     public Usuario actualizarUsuario(Usuario myUsuario) {
         mySessionFactory.getCurrentSession().update(myUsuario);

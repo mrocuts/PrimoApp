@@ -35,8 +35,13 @@ public class UsuarioWS {
 
     @RequestMapping(value="/usuario",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)    
     public @ResponseBody BigInteger insertarUsuario(@RequestBody Usuario myUsuario){
-        Usuario myUsuarioNew = myUsuarioService.agregarUsuario(myUsuario);
-        return myUsuarioNew.getIdUsuario();
+        if(myUsuarioService.traerUsuario(myUsuario.getStrUsuario())== null){
+            Usuario myUsuarioNew = myUsuarioService.agregarUsuario(myUsuario);
+            System.out.println("Usuario registrado con exito.");
+            return myUsuarioNew.getIdUsuario();
+        }
+        System.out.println("Se ha encontrado un usuario con el mismo correo electronico.");
+        return null;
     }
 
     @RequestMapping(value="/login/{usuario}/{password}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)    
