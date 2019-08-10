@@ -18,6 +18,7 @@ import co.com.primo.model.Usuario;
 public interface UsuarioService {
     public Usuario agregarUsuario(Usuario myUsuario);
     public Usuario traerUsuario(Usuario myUsuario);
+    public Usuario traerUsuario(String email);
     public Usuario actualizarUsuario(Usuario myUsuario);
     public Usuario login(Usuario myUsuario);
     public Usuario verificarUsuario(Usuario myUsuario);
