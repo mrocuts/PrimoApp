@@ -45,9 +45,17 @@ public class UsuarioDAOImpl implements UsuarioDAO{
     @Override
     public Usuario login(Usuario myUsuario) {
         //Crear la consulta del Usuario
-        Query myQuery = mySessionFactory.getCurrentSession().createQuery("from Usuario u where u.strUsuario = :usuario and u.strPassword = :password ");
+        Query myQuery = mySessionFactory.getCurrentSession().createQuery("from Usuario u where u.strUsuario = :usuario and u.strPassword = :password and u.bitActivo = true ");
         myQuery.setParameter("usuario", myUsuario.getStrUsuario());
         myQuery.setParameter("password", myUsuario.getStrPassword());
+        return (Usuario) myQuery.uniqueResult();
+    }
+
+    @Override
+    public Usuario verificarUsuario(Usuario myUsuario) {
+        //Crear la consulta del Usuario
+        Query myQuery = mySessionFactory.getCurrentSession().createQuery("from Usuario u where u.strUsuario = :usuario ");
+        myQuery.setParameter("usuario", myUsuario.getStrUsuario());
         return (Usuario) myQuery.uniqueResult();
     }
 }

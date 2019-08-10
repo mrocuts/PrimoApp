@@ -19,4 +19,5 @@ public interface UsuarioDAO {
     public Usuario traerUsuario(Usuario myUsuario);
     public Usuario actualizarUsuario(Usuario myUsuario);
     public Usuario login(Usuario myUsuario);
+    public Usuario verificarUsuario(Usuario myUsuario);
 }

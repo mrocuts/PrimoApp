@@ -45,4 +45,9 @@ public class UsuarioServiceImpl implements UsuarioService{
     public Usuario login(Usuario myUsuario) {
         return myUsuarioDAO.login(myUsuario);
     }
+
+    @Override
+    public Usuario verificarUsuario(Usuario myUsuario) {
+        return myUsuarioDAO.verificarUsuario(myUsuario);
+    }
 }

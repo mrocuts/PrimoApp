@@ -7,13 +7,8 @@ package co.com.primo.ws;
 
 import co.com.primo.model.Persona;
 import co.com.primo.service.PersonaService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.mysql.cj.xdevapi.JsonLiteral;
-import com.mysql.cj.xdevapi.JsonString;
-import com.mysql.cj.xdevapi.JsonValue;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
