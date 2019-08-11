@@ -45,6 +45,7 @@ public class UsuarioWS {
     @RequestMapping(value="/usuario",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)    
     public @ResponseBody BigInteger insertarUsuario(@RequestBody Usuario myUsuario){
         if(myUsuarioService.traerUsuario(myUsuario.getStrUsuario())== null){
+            myUsuario.setStrPassword(DigestUtils.md5Hex(myUsuario.getStrPassword()));
             Usuario myUsuarioNew = myUsuarioService.agregarUsuario(myUsuario);
             System.out.println("Usuario registrado con exito.");
             return myUsuarioNew.getIdUsuario();
