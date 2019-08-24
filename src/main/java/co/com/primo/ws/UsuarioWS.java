@@ -11,8 +11,8 @@ import co.com.primo.model.Log;
 import co.com.primo.model.Usuario;
 import co.com.primo.service.LogService;
 import co.com.primo.service.UsuarioService;
+import co.com.primo.util.EmailService;
 import java.math.BigInteger;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -59,7 +59,7 @@ public class UsuarioWS {
         Usuario myUsuario = new Usuario();
         Usuario myUsuarioAuth = new Usuario();
         Usuario myUsuarioVerificado = new Usuario();
-        SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         
         myUsuario.setStrUsuario(myUser);
         myUsuario.setStrPassword(DigestUtils.md5Hex(myPass));
@@ -107,5 +107,33 @@ public class UsuarioWS {
         }
         
         return new ResponseEntity<Usuario>(myUsuarioAuth,HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/recuperar/{usuario}/",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)    
+    public ResponseEntity<String> recuperarContrasena(@PathVariable("usuario") String myUser){
+        //Atributos de Metodo
+        Usuario myUsuario = new Usuario();
+        String myResultado = "";
+        Usuario myUsuarioVerificado = new Usuario();
+        EmailService myEmailService = new EmailService();
+        System.out.println(myUser);
+        myUsuario.setStrUsuario(myUser);
+        
+        //Traer el Usuario
+        myUsuarioVerificado = myUsuarioService.verificarUsuario(myUsuario);
+        
+        //Verificar que sea un usuario válido
+        if(myUsuarioVerificado != null){
+            //Enviar Correo
+            myEmailService.enviarCorreo(myUsuarioVerificado.getStrUsuario());
+            myResultado = "OK";
+        }
+        else{
+            //Verificar que exista el mail
+            myResultado = "El Usuario no existe";            
+        }
+        
+        //Retornar el resultado
+        return new ResponseEntity<String>(myResultado,HttpStatus.OK);
     }
 }
