@@ -42,15 +42,21 @@ public class UsuarioWS {
     @Autowired
     private LogService myLogService;
 
-    @RequestMapping(value="/usuario",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)    
-    public @ResponseBody BigInteger insertarUsuario(@RequestBody Usuario myUsuario){
-        if(myUsuarioService.traerUsuario(myUsuario.getStrUsuario())== null){
-            Usuario myUsuarioNew = myUsuarioService.agregarUsuario(myUsuario);
+    @RequestMapping(value="/usuario",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)    
+    public @ResponseBody PrimoMsg insertarUsuario(@RequestBody Usuario user){
+        PrimoMsg msg = new PrimoMsg();
+        System.out.println("Servicio invocado... "+user.getStrUsuario());
+        if(myUsuarioService.traerUsuario(user.getStrUsuario())== null){
+            user.setStrPassword(DigestUtils.md5Hex(user.getStrPassword()));
+            myUsuarioService.agregarUsuario(user);
             System.out.println("Usuario registrado con exito.");
-            return myUsuarioNew.getIdUsuario();
+            msg.setResponse("Usuario creado");
+            msg.setSucces(true);
+            return msg;
         }
-        System.out.println("Se ha encontrado un usuario con el mismo correo electronico.");
-        return null;
+        msg.setResponse("Usuario ya registrado");
+        msg.setSucces(false);
+        return msg;
     }
 
     @RequestMapping(value="/login/{usuario}/{password}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)    
