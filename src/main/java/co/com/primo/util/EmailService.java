@@ -61,6 +61,7 @@ public class EmailService {
     
     /**
      * 
+     * @param myCorreo
      */
     public void enviarCorreo(String myCorreo){
         //Inicializar las propiedades
@@ -72,7 +73,7 @@ public class EmailService {
             myMensaje.setFrom(new InternetAddress((String)myProperties.getProperty("mail.smtp.mail.sender")));
             myMensaje.addRecipient(Message.RecipientType.TO, new InternetAddress(myCorreo));
             myMensaje.setSubject("Recuperar Contraseña Primo");
-            myMensaje.setText("Reperar Contraseña en el siguiente link: ");
+            myMensaje.setText("Reperar Contraseña en el siguiente link: http://localhost:7001/PrimoWebApp/registro/cambiarContrasenaEmail.xhtml");
             
             //Transporte
             Transport myTransport = mySession.getTransport("smtp");

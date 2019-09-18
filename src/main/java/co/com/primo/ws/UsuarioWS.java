@@ -119,8 +119,8 @@ public class UsuarioWS {
     public ResponseEntity<String> recuperarContrasena(@PathVariable("usuario") String myUser){
         //Atributos de Metodo
         Usuario myUsuario = new Usuario();
-        String myResultado = "";
-        Usuario myUsuarioVerificado = new Usuario();
+        String myResultado;
+        Usuario myUsuarioVerificado;
         EmailService myEmailService = new EmailService();
         System.out.println(myUser);
         myUsuario.setStrUsuario(myUser);
@@ -141,5 +141,33 @@ public class UsuarioWS {
         
         //Retornar el resultado
         return new ResponseEntity<String>(myResultado,HttpStatus.OK);
+    }
+    
+    @RequestMapping(value="/cambiarContrasena",method = RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)    
+    public ResponseEntity<String> cambiarContrasena(@RequestBody Usuario myUser){
+
+        //Atributos de Metodo
+        Usuario myUsuario = new Usuario();
+        String myResultado;
+        Usuario myUsuarioVerificado;
+        myUsuario.setStrUsuario(myUser.getStrUsuario());
+        
+        //Traer el Usuario
+        myUsuarioVerificado = myUsuarioService.verificarUsuario(myUsuario);
+        
+        //Verificar que sea un usuario válido
+        if(myUsuarioVerificado != null){
+            //Cambiar
+            myUsuarioVerificado.setStrPassword(DigestUtils.md5Hex(myUser.getStrPassword()));
+            myUsuarioService.actualizarUsuario(myUsuarioVerificado);
+            myResultado = "OK";
+        }
+        else{
+            //Verificar que exista el mail
+            myResultado = "El Usuario no existe";            
+        }
+        
+        //Retornar el resultado
+        return new ResponseEntity<>(myResultado,HttpStatus.OK);
     }
 }
