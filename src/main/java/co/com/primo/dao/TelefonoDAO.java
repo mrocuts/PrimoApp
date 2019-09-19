@@ -1,7 +1,6 @@
 /*
  * PACKAGE
  */
-
 package co.com.primo.dao;
 
 /*

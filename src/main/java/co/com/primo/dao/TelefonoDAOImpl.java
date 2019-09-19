@@ -9,11 +9,15 @@ package co.com.primo.dao;
 import co.com.primo.model.Telefono;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
- *
- * @author Usuario
+ * Clase que implementa las funcionalidades del objeto Telefono
+ * @author Mauricio Alejandro Rocuts
+ * @version 1.0
+ * @date 18/09/2019
  */
+@Repository
 public class TelefonoDAOImpl implements TelefonoDAO{
     
     /** Atributos de Clase **/

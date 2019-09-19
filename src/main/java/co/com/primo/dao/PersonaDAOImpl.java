@@ -13,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
- *
- * @author Usuario
+ * Clase que implementa las funcionalidades del objeto Persona
+ * @author Mauricio Alejandro Rocuts
+ * @version 1.0
+ * @date 12/09/2019
  */
 @Repository
 public class PersonaDAOImpl implements PersonaDAO{
