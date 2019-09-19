@@ -14,7 +14,6 @@ import co.com.primo.model.Empresa;
  * @version 1.0
  * @date 13/09/2019
  */
-
 public interface EmpresaService {
     public Empresa agregarEmpresa(Empresa myEmpresa);
     public Empresa traerEmpresa(Empresa myEmpresa);
