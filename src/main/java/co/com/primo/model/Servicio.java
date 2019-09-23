@@ -44,6 +44,21 @@ public class Servicio implements Serializable {
     private Dominio myDominio;
 
     /**
+     * Constructor vacio de la Clase Servicio
+     */
+    public Servicio(){
+        super();
+    } 
+
+    /**
+     * Constructor de la Clase Servicio
+     * @param idServicio
+     */
+    public Servicio(BigInteger idServicio){
+        this.idServicio = idServicio;
+    } 
+
+    /**
      * @return the idServicio
      */
     public BigInteger getIdServicio() {

@@ -44,6 +44,21 @@ public class Telefono implements Serializable {
     private Dominio myDominio;
 
     /**
+     * Constructor vacio de la Clase Telefono
+     */
+    public Telefono(){
+        super();
+    } 
+
+    /**
+     * Constructor de la Clase Telefono
+     * @param idTelefono
+     */
+    public Telefono(BigInteger idTelefono){
+        this.idTelefono = idTelefono;
+    } 
+
+    /**
      * @return the idTelefono
      */
     public BigInteger getIdTelefono() {

@@ -16,6 +16,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -27,6 +29,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="contacto")
+@NamedQueries({
+    @NamedQuery(name = "Contacto.findByEmpresa", query = "SELECT c FROM Contacto c WHERE c.myEmpresa.idEmpresa=:idEmpresa")})
 public class Contacto implements Serializable {
     
     /** Atributos de Clase **/

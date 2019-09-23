@@ -15,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -26,6 +28,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="sucursal")
+@NamedQueries({
+    @NamedQuery(name = "Sucursal.findByEmpresa", query = "SELECT s FROM Sucursal s WHERE s.myEmpresa.idEmpresa=:idEmpresa")})
 public class Sucursal implements Serializable {
 
     /** Atributos de Clase **/
@@ -43,6 +47,21 @@ public class Sucursal implements Serializable {
     @JoinColumn(name = "IDEMPRESA")
     private Empresa myEmpresa;
 
+    /**
+     * Constructor vacio de la Clase Sucursal
+     */
+    public Sucursal(){
+        super();
+    } 
+
+    /**
+     * Constructor de la Clase Sucursal
+     * @param idSucursal 
+     */
+    public Sucursal(BigInteger idSucursal){
+        this.idSucursal = idSucursal;
+    } 
+    
     /**
      * @return the idSucursal
      */

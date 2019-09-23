@@ -7,6 +7,8 @@ package co.com.primo.dao;
  * IMPORTS
  */
 import co.com.primo.model.Contacto;
+import java.math.BigInteger;
+import java.util.List;
 
 /**
  * Interfaz que contiene las funcionalidades del objeto Contacto
@@ -17,5 +19,6 @@ import co.com.primo.model.Contacto;
 public interface ContactoDAO {
     public Contacto agregarContacto(Contacto myContacto);
     public Contacto traerContacto(Contacto myContacto);
+    public List<Contacto> traerContactoPorEmpresa(BigInteger myIdEmpresa);
     public Contacto actualizarContacto(Contacto myContacto);
 }

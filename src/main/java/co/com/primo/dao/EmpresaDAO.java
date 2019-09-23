@@ -7,6 +7,8 @@ package co.com.primo.dao;
  * IMPORTS
  */
 import co.com.primo.model.Empresa;
+import java.math.BigInteger;
+import java.util.List;
 
 /**
  * Interfaz que contiene las funcionalidades del objeto Empresa
@@ -17,5 +19,7 @@ import co.com.primo.model.Empresa;
 public interface EmpresaDAO {
     public Empresa agregarEmpresa(Empresa myEmpresa);
     public Empresa traerEmpresa(Empresa myEmpresa);
+    public Empresa traerEmpresa(String myStrIdentificacion);
+    public List<Empresa> traerEmpresaPorUsuario(BigInteger myIdUsuario);
     public Empresa actualizarEmpresa(Empresa myEmpresa);
 }

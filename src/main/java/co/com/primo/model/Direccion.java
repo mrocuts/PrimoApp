@@ -47,6 +47,21 @@ public class Direccion implements Serializable {
     private Dominio myDominio;
 
     /**
+     * Constructor vacio de la Clase Direccion
+     */
+    public Direccion(){
+        super();
+    } 
+
+    /**
+     * Constructor de la Clase Direccion
+     * @param idDireccion
+     */
+    public Direccion(BigInteger idDireccion){
+        this.idDireccion = idDireccion;
+    } 
+
+    /**
      * @return the idDireccion
      */
     public BigInteger getIdDireccion() {

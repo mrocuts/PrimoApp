@@ -7,6 +7,9 @@ package co.com.primo.dao;
  * IMPORTS
  */
 import co.com.primo.model.SucursalTelefono;
+import co.com.primo.model.SucursalTelefono;
+import java.math.BigInteger;
+import java.util.List;
 
 /**
  * Interfaz que contiene las funcionalidades del objeto Sucursal Telefono
@@ -15,5 +18,6 @@ import co.com.primo.model.SucursalTelefono;
  * @date 19/09/2019
 */
 public interface SucursalTelefonoDAO {
-     public void agregarSucursalTelefono(SucursalTelefono mySucursalTelefono);
+    public SucursalTelefono agregarSucursalTelefono(SucursalTelefono mySucursalTelefono);
+    public List<SucursalTelefono> traerTelefonoPorSucursal(BigInteger myIdSucursal);
 }

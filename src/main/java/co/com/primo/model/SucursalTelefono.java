@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -25,6 +27,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="sucursal_telefono")
+@NamedQueries({
+    @NamedQuery(name = "SucursalTelefono.findBySucursal", query = "SELECT sd FROM SucursalTelefono sd WHERE sd.mySucursal.idSucursal:=idSucursal")})
 public class SucursalTelefono implements Serializable {
 
     /** Atributos de Clase **/
@@ -39,6 +43,23 @@ public class SucursalTelefono implements Serializable {
     @ManyToOne
     @JoinColumn(name = "IDTELEFONO")
     private Telefono myTelefono;
+
+    /**
+     * Constructor vacio de la Clase SucursalTelefono
+     */
+    public SucursalTelefono(){
+        super();
+    } 
+
+    /**
+     * Constructor de la Clase SucursalTelefono
+     * @param mySucursal
+     * @param myTelefono
+     */
+    public SucursalTelefono(Sucursal mySucursal, Telefono myTelefono){
+        this.mySucursal = mySucursal;
+        this.myTelefono = myTelefono;
+    } 
 
     /**
      * @return the idSucursalTelefono

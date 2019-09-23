@@ -8,12 +8,14 @@ package co.com.primo.service;
  */
 import co.com.primo.dao.SucursalDireccionDAO;
 import co.com.primo.model.SucursalDireccion;
+import java.math.BigInteger;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Clase que implementa los servicios del objeto Telefono
+ * Clase que implementa los servicios del objeto Sucursal Direccion
  * @author Mauricio Alejandro Rocuts
  * @version 1.0
  * @date 19/09/2019
@@ -27,7 +29,12 @@ public class SucursalDireccionServiceImpl implements SucursalDireccionService{
     private SucursalDireccionDAO mySucursalDireccionDAO;    
 
     @Override
-    public void agregarSucursalDireccion(SucursalDireccion mySucursalDireccion) {
-        mySucursalDireccionDAO.agregarSucursalDireccion(mySucursalDireccion);
+    public SucursalDireccion agregarSucursalDireccion(SucursalDireccion mySucursalDireccion) {
+        return mySucursalDireccionDAO.agregarSucursalDireccion(mySucursalDireccion);
     }    
+
+    @Override
+    public List<SucursalDireccion> traerDireccionPorSucursal(BigInteger myIdSucursal) {
+        return mySucursalDireccionDAO.traerDireccionPorSucursal(myIdSucursal);
+    }
 }

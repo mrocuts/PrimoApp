@@ -7,6 +7,9 @@ package co.com.primo.dao;
  * IMPORTS
  */
 import co.com.primo.model.Empresa;
+import java.math.BigInteger;
+import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -33,6 +36,20 @@ public class EmpresaDAOImpl implements EmpresaDAO {
     @Override
     public Empresa traerEmpresa(Empresa myEmpresa) {
         return (Empresa) mySessionFactory.getCurrentSession().get(Empresa.class, myEmpresa.getIdEmpresa());
+    }
+
+    @Override
+    public Empresa traerEmpresa(String myStrIdentificacion) {
+        Query q = mySessionFactory.getCurrentSession().getNamedQuery("Empresa.findByIdentificacion");
+        q.setParameter("strIdentificacion", myStrIdentificacion);
+        return (Empresa) q.uniqueResult();
+    }
+    
+    @Override
+    public List<Empresa> traerEmpresaPorUsuario(BigInteger myIdUsuario) {
+        Query q = mySessionFactory.getCurrentSession().getNamedQuery("Empresa.findByUsuario");
+        q.setParameter("idUsuario", myIdUsuario);
+        return (List<Empresa>) q.list();
     }
 
     @Override

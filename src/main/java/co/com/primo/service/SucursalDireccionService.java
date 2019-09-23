@@ -7,6 +7,8 @@ package co.com.primo.service;
  * IMPORTS
  */
 import co.com.primo.model.SucursalDireccion;
+import java.math.BigInteger;
+import java.util.List;
 
 /**
  * Interfaz que define los servicios del objeto Sucursal Direccion
@@ -15,5 +17,6 @@ import co.com.primo.model.SucursalDireccion;
  * @date 19/09/2019
 */
 public interface SucursalDireccionService {
-    public void agregarSucursalDireccion(SucursalDireccion mySucursalDireccion);
+    public SucursalDireccion agregarSucursalDireccion(SucursalDireccion mySucursalDireccion);
+    public List<SucursalDireccion> traerDireccionPorSucursal(BigInteger myIdSucursal);
 }

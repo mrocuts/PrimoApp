@@ -17,6 +17,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -28,6 +30,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="empresa")
+@NamedQueries({
+    @NamedQuery(name = "Usuario.findByIdentificacion", query = "SELECT e FROM Empresa e WHERE e.strIdentificacion=:strIdentificacion"),
+    @NamedQuery(name = "Usuario.findByUsuario", query = "SELECT e FROM Empresa e WHERE e.myUsuario.idUsuario=:idUsuario")})
 public class Empresa implements Serializable {
     
     /** Atributos de Clase **/
@@ -37,7 +42,6 @@ public class Empresa implements Serializable {
     
     @Column
     private String strIdentificacion;
-    
     
     @Column
     private String strRazonSocial;
