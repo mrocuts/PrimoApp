@@ -28,7 +28,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="sucursal_servicio")
 @NamedQueries({
-    @NamedQuery(name = "SucursalServicio.findBySucursal", query = "SELECT ss FROM SucursalServicio ss WHERE ss.mySucursal.idSucursal:=idSucursal")})
+    @NamedQuery(name = "SucursalServicio.findBySucursal", query = "SELECT ss FROM SucursalServicio ss WHERE ss.mySucursal.idSucursal=:idSucursal")})
 public class SucursalServicio implements Serializable {
 
     /** Atributos de Clase **/
