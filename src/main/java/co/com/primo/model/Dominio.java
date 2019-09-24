@@ -13,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -24,6 +26,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="dominio")
+@NamedQueries({
+    @NamedQuery(name = "Dominio.findByTipo", query = "SELECT d FROM Dominio d WHERE d.myTipoDominio.idTipoDominio=:idTipoDominio")})
 public class Dominio {
     
     /** Atributos de Clase **/
