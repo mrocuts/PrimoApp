@@ -12,6 +12,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
  * Clase que implementa las funcionalidades del objeto Dominio
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @version 1.0
  * @date 24/09/2019
  */
+@Repository
 public class DominioDAOImpl implements DominioDAO{
 
     /** Atributos de Clase **/
