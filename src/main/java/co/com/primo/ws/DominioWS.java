@@ -9,6 +9,7 @@ package co.com.primo.ws;
 import co.com.primo.model.Contacto;
 import co.com.primo.model.Dominio;
 import co.com.primo.service.DominioService;
+import co.com.primo.util.DominioUtilList;
 import java.math.BigInteger;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,15 +37,19 @@ public class DominioWS {
     /**
      * Función que trae la información de los dominios por tipo
      * @param myIdTipoDominio
-     * @return  ResponseEntity<List<Dominio>>
+     * @return  List<Dominio>
      */
     @RequestMapping(value="/dominio/{myIdTipoDominio}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)    
-    public ResponseEntity<List<Dominio>> traerDominiosPorTipo(@PathVariable("myIdTipoDominio") BigInteger myIdTipoDominio){
+    public ResponseEntity<DominioUtilList> traerDominiosPorTipo(@PathVariable("myIdTipoDominio") BigInteger myIdTipoDominio){
+        
+        //Atributos de Método
+        DominioUtilList myDominioUtilList = new DominioUtilList();
         
         //Consultar la lista de Dominios Asociados a un tipo de dominio
         List<Dominio> myListDominio = myDominioService.traerDominioTipo(myIdTipoDominio);
+        myDominioUtilList.setMyListDominio(myListDominio);
         
         //Retornar el resultado de la consulta
-        return new ResponseEntity<>(myListDominio,HttpStatus.OK);
+        return new ResponseEntity<>(myDominioUtilList,HttpStatus.OK);
     }
 }
