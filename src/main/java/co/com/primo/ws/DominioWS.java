@@ -6,10 +6,9 @@ package co.com.primo.ws;
 /*
  * IMPORTS
  */
-import co.com.primo.model.Contacto;
 import co.com.primo.model.Dominio;
 import co.com.primo.service.DominioService;
-import co.com.primo.util.DominioUtilList;
+import com.google.gson.Gson;
 import java.math.BigInteger;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,19 +36,18 @@ public class DominioWS {
     /**
      * Función que trae la información de los dominios por tipo
      * @param myIdTipoDominio
-     * @return  List<Dominio>
+     * @return  ResponseEntity<String>
      */
     @RequestMapping(value="/dominio/{myIdTipoDominio}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)    
-    public ResponseEntity<DominioUtilList> traerDominiosPorTipo(@PathVariable("myIdTipoDominio") BigInteger myIdTipoDominio){
+    public ResponseEntity<String> traerDominiosPorTipo(@PathVariable("myIdTipoDominio") BigInteger myIdTipoDominio){
         
         //Atributos de Método
-        DominioUtilList myDominioUtilList = new DominioUtilList();
+        Gson myListGson = new Gson();
         
         //Consultar la lista de Dominios Asociados a un tipo de dominio
         List<Dominio> myListDominio = myDominioService.traerDominioTipo(myIdTipoDominio);
-        myDominioUtilList.setMyListDominio(myListDominio);
         
         //Retornar el resultado de la consulta
-        return new ResponseEntity<>(myDominioUtilList,HttpStatus.OK);
+        return new ResponseEntity<>(myListGson.toJson(myListDominio),HttpStatus.OK);
     }
 }

@@ -27,7 +27,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="dominio")
 @NamedQueries({
-    @NamedQuery(name = "Dominio.findByTipo", query = "SELECT d FROM Dominio d WHERE d.myTipoDominio.idTipoDominio=:idTipoDominio")})
+    @NamedQuery(name = "Dominio.findByTipo", query = "SELECT d FROM Dominio d WHERE d.myTipoDominio.idTipoDominio = 2")})
 public class Dominio {
     
     /** Atributos de Clase **/
