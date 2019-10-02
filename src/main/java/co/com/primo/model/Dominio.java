@@ -6,12 +6,14 @@ package co.com.primo.model;
 /*
  * IMPORTS
  */
+import java.io.Serializable;
 import java.math.BigInteger;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -27,8 +29,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="dominio")
 @NamedQueries({
-    @NamedQuery(name = "Dominio.findByTipo", query = "SELECT d FROM Dominio d WHERE d.myTipoDominio.idTipoDominio = 2")})
-public class Dominio {
+    @NamedQuery(name = "Dominio.findByTipo", query = "SELECT d FROM Dominio d WHERE d.myTipoDominio.idTipoDominio =:idTipoDominio")})
+public class Dominio implements Serializable {
     
     /** Atributos de Clase **/
     @Id
@@ -39,13 +41,22 @@ public class Dominio {
     private String strDescripcion;
     
     @ManyToOne
+    @JoinColumn(name = "IDTIPODOMINIO")
     private TipoDominio myTipoDominio;
     
     @ManyToOne
+    @JoinColumn(name = "IDDOMINIO")
     private Dominio myDominioPadre;
 
     /**
-     * Constructor
+     * Constructor Vacio de la Clase Dominio
+     */
+    public Dominio() {
+    }
+
+    /**
+     * Constructor de la Clase Dominio
+     * @param idDominio
      */
     public Dominio(BigInteger idDominio){
         this.idDominio = idDominio;

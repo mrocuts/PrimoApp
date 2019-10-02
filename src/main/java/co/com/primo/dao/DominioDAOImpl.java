@@ -29,9 +29,8 @@ public class DominioDAOImpl implements DominioDAO{
 
     @Override
     public List<Dominio> traerDominioTipo(BigInteger myIdTipoDominio) {
-        System.out.println("Tipo: " + myIdTipoDominio.toString());
         Query q = mySessionFactory.getCurrentSession().getNamedQuery("Dominio.findByTipo");
-        //q.setParameter("idTipoDominio", myIdTipoDominio);
+        q.setParameter("idTipoDominio", myIdTipoDominio);
         return (List<Dominio>) q.list();
     }
 }
