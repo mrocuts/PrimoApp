@@ -31,8 +31,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="empresa")
 @NamedQueries({
-    @NamedQuery(name = "Usuario.findByIdentificacion", query = "SELECT e FROM Empresa e WHERE e.strIdentificacion=:strIdentificacion"),
-    @NamedQuery(name = "Usuario.findByUsuario", query = "SELECT e FROM Empresa e WHERE e.myUsuario.idUsuario=:idUsuario")})
+    @NamedQuery(name = "Empresa.findByIdentificacion", query = "SELECT e FROM Empresa e WHERE e.strIdentificacion=:strIdentificacion"),
+    @NamedQuery(name = "Empresa.findByUsuario", query = "SELECT e FROM Empresa e WHERE e.myUsuario.idUsuario=:idUsuario")})
 public class Empresa implements Serializable {
     
     /** Atributos de Clase **/

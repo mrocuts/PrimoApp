@@ -68,10 +68,10 @@ public class EmpresaWS {
      */
     @RequestMapping(value="/empresa/{myIdUsuario}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)    
     public ResponseEntity<List<Empresa>> traerEmpresasPorUsuario(@PathVariable("myIdUsuario") BigInteger myIdUsuario){
-        
+        System.out.println("Entre a la peticion... Ejecutando SQL");
         //Consultar la lista de Empresas asociadas a un Usuario
         List<Empresa> myListEmpresa = myEmpresaService.traerEmpresaPorUsuario(myIdUsuario);
-        
+        System.out.println("SQL se ha ejecutado, regresando respuesta.");
         //Retornar el resultado de la consulta
         return new ResponseEntity<>(myListEmpresa,HttpStatus.OK);
     }
