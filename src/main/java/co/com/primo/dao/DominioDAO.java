@@ -18,4 +18,5 @@ import java.util.List;
 */
 public interface DominioDAO {
     public List<Dominio> traerDominioTipo(BigInteger myIdTipoDominio);
+    public List<Dominio> traerDominioPadre(BigInteger myIdDominioPadre);
 }

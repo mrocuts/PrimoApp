@@ -8,6 +8,7 @@ package co.com.primo.ws;
  */
 import co.com.primo.model.Empresa;
 import co.com.primo.service.EmpresaService;
+import com.google.gson.Gson;
 import java.math.BigInteger;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,16 +65,19 @@ public class EmpresaWS {
     /**
      * Función que trae la información de la Empresas asosiadas a un usuario
      * @param myIdUsuario
-     * @return ResponseEntity<List<Empresa>>
+     * @return ResponseEntity<String>
      */
     @RequestMapping(value="/empresa/{myIdUsuario}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)    
-    public ResponseEntity<List<Empresa>> traerEmpresasPorUsuario(@PathVariable("myIdUsuario") BigInteger myIdUsuario){
-        System.out.println("Entre a la peticion... Ejecutando SQL");
+    public ResponseEntity<String> traerEmpresasPorUsuario(@PathVariable("myIdUsuario") BigInteger myIdUsuario){
+
+        //Atributos de Método
+        Gson myListGson = new Gson();
+        
         //Consultar la lista de Empresas asociadas a un Usuario
         List<Empresa> myListEmpresa = myEmpresaService.traerEmpresaPorUsuario(myIdUsuario);
-        System.out.println("SQL se ha ejecutado, regresando respuesta.");
+
         //Retornar el resultado de la consulta
-        return new ResponseEntity<>(myListEmpresa,HttpStatus.OK);
+        return new ResponseEntity<>(myListGson.toJson(myListEmpresa),HttpStatus.OK);
     }
 
     /**

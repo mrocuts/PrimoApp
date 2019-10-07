@@ -33,4 +33,11 @@ public class DominioDAOImpl implements DominioDAO{
         q.setParameter("idTipoDominio", myIdTipoDominio);
         return (List<Dominio>) q.list();
     }
+
+    @Override
+    public List<Dominio> traerDominioPadre(BigInteger myIdDominioPadre) {
+        Query q = mySessionFactory.getCurrentSession().getNamedQuery("Dominio.findByPadre");
+        q.setParameter("idDominioPadre", myIdDominioPadre);
+        return (List<Dominio>) q.list();
+    }
 }

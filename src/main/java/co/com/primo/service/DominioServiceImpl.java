@@ -32,4 +32,9 @@ public class DominioServiceImpl implements DominioService{
     public List<Dominio> traerDominioTipo(BigInteger myIdTipoDominio) {
         return myDominioDAO.traerDominioTipo(myIdTipoDominio);
     }
+
+    @Override
+    public List<Dominio> traerDominioPadre(BigInteger myIdDominioPadre) {
+        return myDominioDAO.traerDominioPadre(myIdDominioPadre);
+    }
 }

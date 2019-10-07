@@ -50,4 +50,22 @@ public class DominioWS {
         //Retornar el resultado de la consulta
         return new ResponseEntity<>(myListGson.toJson(myListDominio),HttpStatus.OK);
     }
+
+    /**
+     * Función que trae la información de los dominios por padre
+     * @param myIdDominioPadre
+     * @return  ResponseEntity<String>
+     */
+    @RequestMapping(value="/dominio/padre/{myIdDominioPadre}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)    
+    public ResponseEntity<String> traerDominiosPorPadre(@PathVariable("myIdDominioPadre") BigInteger myIdDominioPadre){
+        
+        //Atributos de Método
+        Gson myListGson = new Gson();
+        
+        //Consultar la lista de Dominios Asociados a un tipo de dominio
+        List<Dominio> myListDominio = myDominioService.traerDominioPadre(myIdDominioPadre);
+        
+        //Retornar el resultado de la consulta
+        return new ResponseEntity<>(myListGson.toJson(myListDominio),HttpStatus.OK);
+    }
 }
