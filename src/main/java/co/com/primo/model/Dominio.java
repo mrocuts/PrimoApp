@@ -46,7 +46,7 @@ public class Dominio implements Serializable {
     private TipoDominio myTipoDominio;
     
     @ManyToOne
-    @JoinColumn(name = "IDDOMINIO")
+    @JoinColumn(name = "IDDOMINIOPADRE")
     private Dominio myDominioPadre;
 
     /**
