@@ -46,7 +46,7 @@ public class ContactoWS {
         PrimoMsg msg = new PrimoMsg();
         
         //Insertar la información del Contacto
-        if(myContactoService.agregarContacto(myContacto) == null){
+        if(myContactoService.agregarContacto(myContacto) != null){
             //Configurar el mensaje de Exito
             msg.setResponse("Contacto creado");
             msg.setSucces(true);

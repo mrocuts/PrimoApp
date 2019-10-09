@@ -58,22 +58,22 @@ public class SucursalWS {
      * @return @ResponseBody
      */
     @RequestMapping(value="/sucursal",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody PrimoMsg agregarSucursal(@RequestBody Sucursal mySucursal){
+    public @ResponseBody Sucursal agregarSucursal(@RequestBody Sucursal mySucursal){
         
         //Atributos de Metodo
-        PrimoMsg msg = new PrimoMsg();
-        
+        Sucursal mySucursalTemp = new Sucursal();
+
         //Insertar la información del Sucursal
-        if(mySucursalService.agregarSucursal(mySucursal) == null){
-            //Configurar el mensaje de Exito
-            msg.setResponse("Sucursal creada");
-            msg.setSucces(true);
-            return msg;
+        mySucursalTemp = mySucursalService.agregarSucursal(mySucursal);
+        
+        //Validar si la operación fue exitosa
+        if(mySucursalTemp == null){
+            mySucursalTemp = new Sucursal();
+            mySucursalTemp.setIdSucursal(BigInteger.ZERO);
         }
         
-        msg.setResponse("Error al insertar la información de la sucursal");
-        msg.setSucces(false);
-        return msg;
+        //Retornar el elemento
+        return mySucursalTemp;
     }
 
     /**
@@ -118,20 +118,17 @@ public class SucursalWS {
 
     /**
      * Función que asocia del información de la Sucursal y la Dirección
-     * @param myIdSucursal
-     * @param myIdDireccion
+     * @param mySucursalDireccion
      * @return @ResponseBody
      */
-    @RequestMapping(value="/sucursalDireccion/{myIdSucursal}/{myIdDireccion}",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody PrimoMsg agregarSucursalDireccion(@PathVariable("myIdSucursal") BigInteger myIdSucursal, 
-                                                           @PathVariable("myIdDireccion") BigInteger myIdDireccion){
+    @RequestMapping(value="/sucursalDireccion",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody PrimoMsg agregarSucursalDireccion(@RequestBody SucursalDireccion mySucursalDireccion){
         
         //Atributos de Metodo
         PrimoMsg msg = new PrimoMsg();
-        SucursalDireccion mySucursalDireccion = new SucursalDireccion(new Sucursal(myIdSucursal), new Direccion(myIdDireccion));
         
         //Insertar la información del Sucursal
-        if(mySucursalDireccionService.agregarSucursalDireccion(mySucursalDireccion) == null){
+        if(mySucursalDireccionService.agregarSucursalDireccion(mySucursalDireccion) != null){
             //Configurar el mensaje de Exito
             msg.setResponse("La dirección de sucursal creada");
             msg.setSucces(true);

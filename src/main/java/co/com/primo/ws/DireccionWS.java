@@ -39,22 +39,20 @@ public class DireccionWS {
      * @return @ResponseBody
      */
     @RequestMapping(value="/direccion",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody PrimoMsg agregarDireccion(@RequestBody Direccion myDireccion){
+    public @ResponseBody Direccion agregarDireccion(@RequestBody Direccion myDireccion){
         
         //Atributos de Metodo
-        PrimoMsg msg = new PrimoMsg();
-        
+        Direccion myDireccionTemp = new Direccion();
+        myDireccionTemp = myDireccionService.agregarDireccion(myDireccion);
+                
         //Insertar la información del Direccion
-        if(myDireccionService.agregarDireccion(myDireccion) == null){
-            //Configurar el mensaje de Exito
-            msg.setResponse("Direccion creada");
-            msg.setSucces(true);
-            return msg;
+        if(myDireccionTemp == null){
+            myDireccionTemp = new Direccion();
+            myDireccionTemp.setIdDireccion(BigInteger.ZERO);
         }
         
-        msg.setResponse("Error al insertar la información de la Direccion");
-        msg.setSucces(false);
-        return msg;
+        //Retornar la información de la dirección
+        return myDireccionTemp;
     }
 
     /**
