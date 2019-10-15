@@ -41,6 +41,7 @@ public class EmpresaDAOImpl implements EmpresaDAO {
     @Override
     public Empresa traerEmpresa(String myStrIdentificacion) {
         Query q = mySessionFactory.getCurrentSession().getNamedQuery("Empresa.findByIdentificacion");
+        System.out.println("Consultado");
         q.setParameter("strIdentificacion", myStrIdentificacion);
         return (Empresa) q.uniqueResult();
     }

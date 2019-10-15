@@ -52,6 +52,7 @@ public class EmpresaWS {
             myEmpresaService.agregarEmpresa(myEmpresa);
 
             //Configurar el mensaje de Exito
+            System.out.println("Usuario registrado con exito.");
             msg.setResponse("Empresa creada");
             msg.setSucces(true);
             return msg;
