@@ -43,10 +43,16 @@ public class Sucursal implements Serializable {
     @Column
     private boolean bitPrincipal;
     
+    @Column
+    private String latitud;
+
+    @Column
+    private String longitud;
+
     @ManyToOne
     @JoinColumn(name = "IDEMPRESA")
     private Empresa myEmpresa;
-
+       
     /**
      * Constructor vacio de la Clase Sucursal
      */
@@ -91,6 +97,20 @@ public class Sucursal implements Serializable {
     }
 
     /**
+     * @return the latitud
+     */
+    public String getLatitud() {
+        return latitud;
+    }
+
+    /**
+     * @return the longitud
+     */
+    public String getLongitud() {
+        return longitud;
+    }
+
+    /**
      * @param idSucursal the idSucursal to set
      */
     public void setIdSucursal(BigInteger idSucursal) {
@@ -116,5 +136,19 @@ public class Sucursal implements Serializable {
      */
     public void setMyEmpresa(Empresa myEmpresa) {
         this.myEmpresa = myEmpresa;
+    }
+    
+    /**
+     * @param latitud the latitud to set
+     */
+    public void setLatitud(String latitud) {
+        this.latitud = latitud;
+    }
+
+    /**
+     * @param longitud the longitud to set
+     */
+    public void setLongitud(String longitud) {
+        this.longitud = longitud;
     }
 }

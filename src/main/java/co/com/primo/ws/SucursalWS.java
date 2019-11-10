@@ -6,14 +6,11 @@ package co.com.primo.ws;
 /*
  * IMPORTS
  */
-import co.com.primo.model.Direccion;
 import co.com.primo.model.Servicio;
 import co.com.primo.model.Sucursal;
-import co.com.primo.model.SucursalDireccion;
 import co.com.primo.model.SucursalServicio;
 import co.com.primo.model.SucursalTelefono;
 import co.com.primo.model.Telefono;
-import co.com.primo.service.SucursalDireccionService;
 import co.com.primo.service.SucursalService;
 import co.com.primo.service.SucursalServicioService;
 import co.com.primo.service.SucursalTelefonoService;
@@ -42,9 +39,6 @@ public class SucursalWS {
     /** Atributos de Metodo **/
     @Autowired
     private SucursalService mySucursalService;
-
-    @Autowired
-    private SucursalDireccionService mySucursalDireccionService;
 
     @Autowired
     private SucursalTelefonoService mySucursalTelefonoService;
@@ -115,46 +109,7 @@ public class SucursalWS {
         msg.setSucces(false);
         return msg;
     }
-
-    /**
-     * Función que asocia del información de la Sucursal y la Dirección
-     * @param mySucursalDireccion
-     * @return @ResponseBody
-     */
-    @RequestMapping(value="/sucursalDireccion",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody PrimoMsg agregarSucursalDireccion(@RequestBody SucursalDireccion mySucursalDireccion){
-        
-        //Atributos de Metodo
-        PrimoMsg msg = new PrimoMsg();
-        
-        //Insertar la información del Sucursal
-        if(mySucursalDireccionService.agregarSucursalDireccion(mySucursalDireccion) != null){
-            //Configurar el mensaje de Exito
-            msg.setResponse("La dirección de sucursal creada");
-            msg.setSucces(true);
-            return msg;
-        }
-        
-        msg.setResponse("Error al insertar la información de la dirección de la sucursal");
-        msg.setSucces(false);
-        return msg;
-    }
     
-    /**
-     * Función que trae la información de las direcciones por Sucursal
-     * @param myIdSucursal
-     * @return  ResponseEntity<List<SucursalDireccion>>
-     */
-    @RequestMapping(value="/sucursalDireccion/{myIdSucursal}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)    
-    public ResponseEntity<List<SucursalDireccion>> traerDireccionesPorSucursal(@PathVariable("myIdSucursal") BigInteger myIdSucursal){
-        
-        //Consultar la lista de Sucursals asociadas a una Empresa
-        List<SucursalDireccion> myListSucursalDireccion = mySucursalDireccionService.traerDireccionPorSucursal(myIdSucursal);
-        
-        //Retornar el resultado de la consulta
-        return new ResponseEntity<>(myListSucursalDireccion,HttpStatus.OK);
-    }
-
     /**
      * Función que asocia del información de la Sucursal y el Telefono
      * @param myIdSucursal
