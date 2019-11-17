@@ -20,6 +20,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * Clase que representa el Objeto Empresa
@@ -47,7 +49,7 @@ public class Empresa implements Serializable {
     private String strRazonSocial;
     
     @Column
-    private Date dtmFechaFundacion;
+    private String dtmFechaFundacion;
     
     @Column
     private Blob imgLogo;
@@ -84,7 +86,7 @@ public class Empresa implements Serializable {
     /**
      * @return the dtmFechaFundacion
      */
-    public Date getDtmFechaFundacion() {
+    public String getDtmFechaFundacion() {
         return dtmFechaFundacion;
     }
 
@@ -133,7 +135,7 @@ public class Empresa implements Serializable {
     /**
      * @param dtmFechaFundacion the dtmFechaFundacion to set
      */
-    public void setDtmFechaFundacion(Date dtmFechaFundacion) {
+    public void setDtmFechaFundacion(String dtmFechaFundacion) {
         this.dtmFechaFundacion = dtmFechaFundacion;
     }
 
