@@ -6,6 +6,7 @@ package co.com.primo.model;
 /*
  * IMPORTS
  */
+import java.io.Serializable;
 import java.math.BigInteger;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,13 +29,16 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT g FROM Usuario g"),
     @NamedQuery(name = "Usuario.findByEmail", query = "SELECT g FROM Usuario g WHERE g.strUsuario=:strUsuario")})
-public class Usuario {
+public class Usuario implements Serializable {
 
     /** Atributos de Clase **/
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private BigInteger idUsuario;
     
+    @Column
+    private BigInteger intTipoUsuario;
+
     @Column
     private String strUsuario;
     
@@ -115,5 +119,19 @@ public class Usuario {
      */
     public void setBitActivo(boolean bitActivo) {
         this.bitActivo = bitActivo;
+    }
+
+    /**
+     * @return the intTipoUsuario
+     */
+    public BigInteger getIntTipoUsuario() {
+        return intTipoUsuario;
+    }
+
+    /**
+     * @param intTipoUsuario the intTipoUsuario to set
+     */
+    public void setIntTipoUsuario(BigInteger intTipoUsuario) {
+        this.intTipoUsuario = intTipoUsuario;
     }
 }

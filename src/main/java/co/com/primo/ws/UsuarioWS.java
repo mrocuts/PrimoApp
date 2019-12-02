@@ -59,8 +59,9 @@ public class UsuarioWS {
         return msg;
     }
 
-    @RequestMapping(value="/login/{usuario}/{password}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)    
-    public ResponseEntity<Usuario> login(@PathVariable("usuario") String myUser,@PathVariable("password") String myPass){
+    @RequestMapping(value="/login/{usuario}/{password}/{intTipoUsuario}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)    
+    public ResponseEntity<Usuario> login(@PathVariable("usuario") String myUser,@PathVariable("password") String myPass,
+                                         @PathVariable("intTipoUsuario") String intTipoUsuario){
         //Atributos de Metodo
         Usuario myUsuario = new Usuario();
         Usuario myUsuarioAuth = new Usuario();
@@ -69,6 +70,7 @@ public class UsuarioWS {
         
         myUsuario.setStrUsuario(myUser);
         myUsuario.setStrPassword(DigestUtils.md5Hex(myPass));
+        myUsuario.setIntTipoUsuario(new BigInteger(intTipoUsuario));
         
         //Traer el Usuario
         myUsuarioAuth = myUsuarioService.login(myUsuario);
