@@ -8,7 +8,6 @@ package co.com.primo.model;
  */
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,8 +15,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
 
 /**
  * Clase que representa el Objeto Garaje
@@ -28,6 +28,8 @@ import javax.persistence.Temporal;
 
 @Entity
 @Table(name="garaje")
+@NamedQueries({
+    @NamedQuery(name = "Garaje.findByUsuario", query = "SELECT g FROM Garaje g WHERE g.myUsuario.idUsuario=:idUsuario")})
 public class Garaje implements Serializable {
     
     /** Atributos de Clase **/
@@ -36,8 +38,7 @@ public class Garaje implements Serializable {
     private BigInteger idGaraje;
     
     @Column
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dtmFechaCreacion;
+    private String dtmFechaCreacion;
     
     @Column
     private boolean bitActivo;
@@ -58,7 +59,7 @@ public class Garaje implements Serializable {
      * @param bitActivo
      * @param myUsuario 
      */
-    public Garaje(Date dtmFechaCreacion,boolean bitActivo,Usuario myUsuario){
+    public Garaje(String dtmFechaCreacion,boolean bitActivo,Usuario myUsuario){
         this.dtmFechaCreacion = dtmFechaCreacion;
         this.bitActivo = bitActivo;
         this.myUsuario = myUsuario;
@@ -81,14 +82,14 @@ public class Garaje implements Serializable {
     /**
      * @return the dtmFechaCreacion
      */
-    public Date getDtmFechaCreacion() {
+    public String getDtmFechaCreacion() {
         return dtmFechaCreacion;
     }
 
     /**
      * @param dtmFechaCreacion the dtmFechaCreacion to set
      */
-    public void setDtmFechaCreacion(Date dtmFechaCreacion) {
+    public void setDtmFechaCreacion(String dtmFechaCreacion) {
         this.dtmFechaCreacion = dtmFechaCreacion;
     }
 

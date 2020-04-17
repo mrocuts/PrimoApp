@@ -7,8 +7,10 @@ package co.com.primo.ws;
  * IMPORTS
  */
 import co.com.primo.model.Dominio;
+import co.com.primo.model.Garaje;
 import co.com.primo.model.Log;
 import co.com.primo.model.Usuario;
+import co.com.primo.service.GarajeService;
 import co.com.primo.service.LogService;
 import co.com.primo.service.UsuarioService;
 import co.com.primo.util.EmailService;
@@ -42,13 +44,24 @@ public class UsuarioWS {
     @Autowired
     private LogService myLogService;
 
+    @Autowired
+    private GarajeService myGarajeService;
+
     @RequestMapping(value="/usuario",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)    
     public @ResponseBody PrimoMsg insertarUsuario(@RequestBody Usuario user){
         PrimoMsg msg = new PrimoMsg();
         System.out.println("Servicio invocado... "+user.getStrUsuario());
         if(myUsuarioService.traerUsuario(user.getStrUsuario())== null){
             user.setStrPassword(DigestUtils.md5Hex(user.getStrPassword()));
-            myUsuarioService.agregarUsuario(user);
+            Usuario myUsuarioCreado = myUsuarioService.agregarUsuario(user);
+            
+            //Verificar el Usuario Creado y que sea de tipo Usuario
+            if(myUsuarioCreado != null && myUsuarioCreado.getIntTipoUsuario().intValue() == 2){
+                //Crear el Objeto Garaje
+                myGarajeService.agregarGaraje(new Garaje(new Date().toString(), true, myUsuarioCreado));
+                System.out.println("Garaje registrado con exito.");
+            }
+            
             System.out.println("Usuario registrado con exito.");
             msg.setResponse("Usuario creado");
             msg.setSucces(true);

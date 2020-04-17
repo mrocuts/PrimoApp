@@ -14,7 +14,7 @@ import java.util.List;
  * Interfaz que define los servicios del objeto Contacto
  * @author Mauricio Alejandro Rocuts
  * @version 1.0
- * @date 19/009/2019
+ * @date 19/09/2019
 */
 public interface ContactoService {
     public Contacto agregarContacto(Contacto myContacto);
