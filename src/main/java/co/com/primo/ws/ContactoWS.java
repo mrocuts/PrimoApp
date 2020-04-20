@@ -8,6 +8,8 @@ package co.com.primo.ws;
  */
 import co.com.primo.model.Contacto;
 import co.com.primo.service.ContactoService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.math.BigInteger;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,7 @@ public class ContactoWS {
     /** Atributos de Metodo **/
     @Autowired
     private ContactoService myContactoService;
+    private final Gson myGson=new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
 
     /**
      * Función que inserta la información del Contacto en la Base de Datos
@@ -40,22 +43,22 @@ public class ContactoWS {
      * @return @ResponseBody
      */
     @RequestMapping(value="/contacto",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody PrimoMsg agregarContacto(@RequestBody Contacto myContacto){
-        
-        //Atributos de Metodo
+    public @ResponseBody ResponseEntity<String> agregarContacto(@RequestBody Contacto myContacto){
         PrimoMsg msg = new PrimoMsg();
-        
-        //Insertar la información del Contacto
-        if(myContactoService.agregarContacto(myContacto) != null){
-            //Configurar el mensaje de Exito
-            msg.setResponse("Contacto creado");
-            msg.setSucces(true);
-            return msg;
+        try{
+            if(myContactoService.agregarContacto(myContacto) != null){
+                msg.setResponse("Contacto creado");
+                msg.setSucces(true);
+            }else{
+                msg.setResponse("Error al insertar la información de la empresa");
+                msg.setSucces(false);
+            }
+            return new ResponseEntity<>(myGson.toJson(msg),HttpStatus.OK);
+        }catch(Exception ex){
+            msg.setResponse(ex.getMessage());
+            msg.setSucces(false);
+            return new ResponseEntity<>(myGson.toJson(msg),HttpStatus.BAD_REQUEST);
         }
-        
-        msg.setResponse("Error al insertar la información de la empresa");
-        msg.setSucces(false);
-        return msg;
     }
 
     /**
@@ -64,13 +67,9 @@ public class ContactoWS {
      * @return  ResponseEntity<List<Contacto>>
      */
     @RequestMapping(value="/contacto/{myIdEmpresa}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)    
-    public ResponseEntity<List<Contacto>> traerContactosPorEmpresa(@PathVariable("myIdEmpresa") BigInteger myIdEmpresa){
-        
-        //Consultar la lista de Contactos asociadas a una Empresa
-        List<Contacto> myListContacto = myContactoService.traerContactoPorEmpresa(myIdEmpresa);
-        
-        //Retornar el resultado de la consulta
-        return new ResponseEntity<>(myListContacto,HttpStatus.OK);
+    public ResponseEntity<String> traerContactosPorEmpresa(@PathVariable("myIdEmpresa") BigInteger myIdEmpresa){
+        List<Contacto> contactos = myContactoService.traerContactoPorEmpresa(myIdEmpresa);
+        return new ResponseEntity<>(myGson.toJson(contactos),HttpStatus.OK);
     }
 
     /**
@@ -79,22 +78,21 @@ public class ContactoWS {
      * @return @ResponseBody
      */
     @RequestMapping(value="/actualizarContacto",method = RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)    
-    public @ResponseBody PrimoMsg actualizarContacto(@RequestBody Contacto myContacto){
-
-        //Atributos de Metodo
+    public @ResponseBody ResponseEntity<String> actualizarContacto(@RequestBody Contacto myContacto){
         PrimoMsg msg = new PrimoMsg();
-        
-        //Actualizar la información del Contacto
-        if(myContactoService.actualizarContacto(myContacto) == null){
-
-            //Configurar el mensaje de Exito
-            msg.setResponse("Contacto actualizado");
-            msg.setSucces(true);
-            return msg;
+        try{
+            if(myContactoService.actualizarContacto(myContacto) == null){
+                msg.setResponse("Contacto actualizado");
+                msg.setSucces(true);
+            }else{
+                msg.setResponse("Error al actualizar la información del Contacto");
+                msg.setSucces(false);
+            }
+            return new ResponseEntity<>(myGson.toJson(msg),HttpStatus.OK);
+        }catch(Exception ex){
+            msg.setResponse(ex.getMessage());
+            msg.setSucces(false);
+            return new ResponseEntity<>(myGson.toJson(msg),HttpStatus.BAD_REQUEST);
         }
-        
-        msg.setResponse("Error al actualizar la información del Contacto");
-        msg.setSucces(false);
-        return msg;
     }
 }

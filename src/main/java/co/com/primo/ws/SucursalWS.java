@@ -14,6 +14,8 @@ import co.com.primo.model.Telefono;
 import co.com.primo.service.SucursalService;
 import co.com.primo.service.SucursalServicioService;
 import co.com.primo.service.SucursalTelefonoService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.math.BigInteger;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,28 +48,29 @@ public class SucursalWS {
     @Autowired
     private SucursalServicioService mySucursalServicioService;
 
+    private final Gson myGson=new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
+    
     /**
      * Función que inserta la información del Sucursal en la Base de Datos
      * @param mySucursal
      * @return @ResponseBody
      */
     @RequestMapping(value="/sucursal",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody Sucursal agregarSucursal(@RequestBody Sucursal mySucursal){
-        
-        //Atributos de Metodo
-        Sucursal mySucursalTemp = new Sucursal();
-
-        //Insertar la información del Sucursal
-        mySucursalTemp = mySucursalService.agregarSucursal(mySucursal);
-        
-        //Validar si la operación fue exitosa
-        if(mySucursalTemp == null){
-            mySucursalTemp = new Sucursal();
-            mySucursalTemp.setIdSucursal(BigInteger.ZERO);
+    public ResponseEntity<String> agregarSucursal(@RequestBody Sucursal mySucursal){
+        PrimoMsg msg = new PrimoMsg();
+        try{
+            if(mySucursalService.agregarSucursal(mySucursal)!=null){
+                msg.setResponse("Exito al guarda la sucursal");
+                msg.setSucces(true);
+            }else{
+                msg.setResponse("La sucursal no se guardo, verifique e intente nuevamnte");
+                msg.setSucces(false);
+            }
+        }catch(Exception ex){
+            msg.setResponse(ex.getMessage());
+            msg.setSucces(false);
         }
-        
-        //Retornar el elemento
-        return mySucursalTemp;
+        return new ResponseEntity<>(myGson.toJson(msg),(msg.isSucces()?HttpStatus.OK:HttpStatus.BAD_REQUEST));
     }
 
     /**
@@ -76,13 +79,9 @@ public class SucursalWS {
      * @return  ResponseEntity<List<Sucursal>>
      */
     @RequestMapping(value="/sucursal/{myIdEmpresa}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)    
-    public ResponseEntity<List<Sucursal>> traerSucursalesPorEmpresa(@PathVariable("myIdEmpresa") BigInteger myIdEmpresa){
-        
-        //Consultar la lista de Sucursals asociadas a una Empresa
-        List<Sucursal> myListSucursal = mySucursalService.traerSucursalPorEmpresa(myIdEmpresa);
-        
-        //Retornar el resultado de la consulta
-        return new ResponseEntity<>(myListSucursal,HttpStatus.OK);
+    public ResponseEntity<String> traerSucursalesPorEmpresa(@PathVariable("myIdEmpresa") BigInteger myIdEmpresa){
+        List<Sucursal> myListEmpresa = mySucursalService.traerSucursalPorEmpresa(myIdEmpresa);
+        return new ResponseEntity<>(myGson.toJson(myListEmpresa),HttpStatus.OK);
     }
 
     /**
@@ -90,24 +89,18 @@ public class SucursalWS {
      * @param mySucursal
      * @return @ResponseBody
      */
-    @RequestMapping(value="/actualizarSucursal",method = RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)    
-    public @ResponseBody PrimoMsg actualizarSucursal(@RequestBody Sucursal mySucursal){
-
-        //Atributos de Metodo
+    @RequestMapping(value="/actualizarSucursal",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)    
+    public ResponseEntity<String> actualizarSucursal(@RequestBody Sucursal mySucursal){
         PrimoMsg msg = new PrimoMsg();
-        
-        //Actualizar la información del Sucursal
-        if(mySucursalService.actualizarSucursal(mySucursal) == null){
-
-            //Configurar el mensaje de Exito
+        try{
+            mySucursalService.actualizarSucursal(mySucursal);
             msg.setResponse("Sucursal actualizada");
             msg.setSucces(true);
-            return msg;
+        }catch(Exception ex){
+            msg.setResponse(ex.getCause().toString());
+            msg.setSucces(false);
         }
-        
-        msg.setResponse("Error al actualizar la información de la Sucursal");
-        msg.setSucces(false);
-        return msg;
+        return new ResponseEntity<>(myGson.toJson(msg),(msg.isSucces()?HttpStatus.OK:HttpStatus.BAD_REQUEST));
     }
     
     /**

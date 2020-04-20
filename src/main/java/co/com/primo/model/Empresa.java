@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.Blob;
 import java.util.Date;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +23,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Clase que representa el Objeto Empresa
@@ -49,7 +51,8 @@ public class Empresa implements Serializable {
     private String strRazonSocial;
     
     @Column
-    private String dtmFechaFundacion;
+    @Temporal(TemporalType.DATE)
+    private Date dtmFechaFundacion;
     
     @Column
     private Blob imgLogo;
@@ -86,7 +89,7 @@ public class Empresa implements Serializable {
     /**
      * @return the dtmFechaFundacion
      */
-    public String getDtmFechaFundacion() {
+    public Date getDtmFechaFundacion() {
         return dtmFechaFundacion;
     }
 
@@ -135,7 +138,7 @@ public class Empresa implements Serializable {
     /**
      * @param dtmFechaFundacion the dtmFechaFundacion to set
      */
-    public void setDtmFechaFundacion(String dtmFechaFundacion) {
+    public void setDtmFechaFundacion(Date dtmFechaFundacion) {
         this.dtmFechaFundacion = dtmFechaFundacion;
     }
 

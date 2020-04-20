@@ -9,6 +9,7 @@ package co.com.primo.ws;
 import co.com.primo.model.Empresa;
 import co.com.primo.service.EmpresaService;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.math.BigInteger;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class EmpresaWS {
     /** Atributos de Metodo **/
     @Autowired
     private EmpresaService myEmpresaService;
+    private final Gson myGson=new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
     
     /**
      * Función que inserta la información de la Empresa en la Base de Datos
@@ -41,26 +43,20 @@ public class EmpresaWS {
      * @return @ResponseBody
      */
     @RequestMapping(value="/empresa",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody PrimoMsg agregarEmpresa(@RequestBody Empresa myEmpresa){
-        
-        //Atributos de Metodo
+    public @ResponseBody ResponseEntity<String> agregarEmpresa(@RequestBody Empresa myEmpresa){
         PrimoMsg msg = new PrimoMsg();
-        
-        //Validar que la empresa no exista en la Base de Datos
-        if(myEmpresaService.traerEmpresa(myEmpresa.getStrIdentificacion())== null){
-            // Si la empresa no existe se agrega en la base de datos
-            myEmpresaService.agregarEmpresa(myEmpresa);
-
-            //Configurar el mensaje de Exito
-            System.out.println("Usuario registrado con exito.");
-            msg.setResponse("Empresa creada");
-            msg.setSucces(true);
-            return msg;
+        try{
+            if(myEmpresaService.traerEmpresa(myEmpresa.getStrIdentificacion())== null){
+                myEmpresaService.agregarEmpresa(myEmpresa);
+                msg.setResponse("Empresa creada");
+                msg.setSucces(true);
+            }
+            return new ResponseEntity<>(myGson.toJson(msg),HttpStatus.OK);
+        }catch(Exception ex){
+            msg.setResponse(ex.getMessage());
+            msg.setSucces(false);
+            return new ResponseEntity<>(myGson.toJson(msg),HttpStatus.BAD_REQUEST);
         }
-        
-        msg.setResponse("La empresa ya se encuentra registrada");
-        msg.setSucces(false);
-        return msg;
     }
     
     /**
@@ -70,15 +66,8 @@ public class EmpresaWS {
      */
     @RequestMapping(value="/empresa/{myIdUsuario}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)    
     public ResponseEntity<String> traerEmpresasPorUsuario(@PathVariable("myIdUsuario") BigInteger myIdUsuario){
-
-        //Atributos de Método
-        Gson myListGson = new Gson();
-        
-        //Consultar la lista de Empresas asociadas a un Usuario
         List<Empresa> myListEmpresa = myEmpresaService.traerEmpresaPorUsuario(myIdUsuario);
-
-        //Retornar el resultado de la consulta
-        return new ResponseEntity<>(myListGson.toJson(myListEmpresa),HttpStatus.OK);
+        return new ResponseEntity<>(myGson.toJson(myListEmpresa),HttpStatus.OK);
     }
 
     /**
@@ -86,23 +75,22 @@ public class EmpresaWS {
      * @param myEmpresa
      * @return @ResponseBody
      */
-    @RequestMapping(value="/actualizarEmpresa",method = RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)    
-    public @ResponseBody PrimoMsg actualizarEmpresa(@RequestBody Empresa myEmpresa){
-
-        //Atributos de Metodo
+    @RequestMapping(value="/actualizarEmpresa",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)    
+    public @ResponseBody ResponseEntity<String> actualizarEmpresa(@RequestBody Empresa myEmpresa){
         PrimoMsg msg = new PrimoMsg();
-        
-        //Actualizar la información de la Empresa
-        if(myEmpresaService.actualizarEmpresa(myEmpresa) == null){
-
-            //Configurar el mensaje de Exito
-            msg.setResponse("Empresa actualizada");
-            msg.setSucces(true);
-            return msg;
+        try{
+            if(myEmpresaService.actualizarEmpresa(myEmpresa) == null){
+                msg.setResponse("Empresa actualizada");
+                msg.setSucces(true);
+            }else{
+                msg.setResponse("Error al actualizar la informacion de la Empresa");
+                msg.setSucces(false);
+            }
+            return new ResponseEntity<>(myGson.toJson(msg),HttpStatus.OK);
+        }catch(Exception ex){
+            msg.setResponse(ex.getMessage());
+            msg.setSucces(false);
+            return new ResponseEntity<>(myGson.toJson(msg),HttpStatus.BAD_REQUEST);
         }
-        
-        msg.setResponse("Error al actualizar la información de la Empresa");
-        msg.setSucces(false);
-        return msg;
     }
 }

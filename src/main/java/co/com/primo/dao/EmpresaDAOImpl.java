@@ -35,6 +35,7 @@ public class EmpresaDAOImpl implements EmpresaDAO {
 
     @Override
     public Empresa traerEmpresa(Empresa myEmpresa) {
+        System.out.println(((Empresa)mySessionFactory.getCurrentSession().get(Empresa.class, myEmpresa.getIdEmpresa())).getDtmFechaFundacion().toString());
         return (Empresa) mySessionFactory.getCurrentSession().get(Empresa.class, myEmpresa.getIdEmpresa());
     }
 

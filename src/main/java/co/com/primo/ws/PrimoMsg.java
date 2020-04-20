@@ -5,23 +5,16 @@
  */
 package co.com.primo.ws;
 
+import java.io.Serializable;
+
 /**
  *
  * @author OvalleGA
  */
-public class PrimoMsg {
-    private Object message_object;
+public class PrimoMsg implements Serializable{
     private boolean succes;
     private String response;
     
-    public Object getMessage_object() {
-        return message_object;
-    }
-
-    public void setMessage_object(Object message_object) {
-        this.message_object = message_object;
-    }
-
     public boolean isSucces() {
         return succes;
     }
@@ -36,7 +29,5 @@ public class PrimoMsg {
 
     public void setResponse(String response) {
         this.response = response;
-    }
-    
-    
+    }   
 }
