@@ -118,5 +118,4 @@ public class Dominio implements Serializable {
     public void setMyDominioPadre(Dominio myDominioPadre) {
         this.myDominioPadre = myDominioPadre;
     }
-
 }

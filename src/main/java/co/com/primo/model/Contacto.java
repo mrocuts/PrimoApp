@@ -212,4 +212,7 @@ public class Contacto implements Serializable {
     public void setMyDominio(Dominio myDominio) {
         this.myDominio = myDominio;
     }
+
+    public Contacto() {
+    }
 }

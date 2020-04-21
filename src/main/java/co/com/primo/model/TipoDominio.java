@@ -61,4 +61,6 @@ public class TipoDominio {
         this.strDescripcion = strDescripcion;
     }
 
+    public TipoDominio() {
+    }
 }

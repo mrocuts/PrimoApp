@@ -8,14 +8,22 @@ package co.com.primo.model;
  */
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Clase que representa el Objeto Usuario
@@ -30,7 +38,6 @@ import javax.persistence.Table;
     @NamedQuery(name = "Usuario.findAll", query = "SELECT g FROM Usuario g"),
     @NamedQuery(name = "Usuario.findByEmail", query = "SELECT g FROM Usuario g WHERE g.strUsuario=:strUsuario")})
 public class Usuario implements Serializable {
-
     /** Atributos de Clase **/
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -133,5 +140,8 @@ public class Usuario implements Serializable {
      */
     public void setIntTipoUsuario(BigInteger intTipoUsuario) {
         this.intTipoUsuario = intTipoUsuario;
+    }
+
+    public Usuario() {
     }
 }

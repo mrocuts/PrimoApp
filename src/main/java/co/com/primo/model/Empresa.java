@@ -38,8 +38,7 @@ import org.springframework.format.annotation.DateTimeFormat;
     @NamedQuery(name = "Empresa.findByIdentificacion", query = "SELECT e FROM Empresa e WHERE e.strIdentificacion=:strIdentificacion"),
     @NamedQuery(name = "Empresa.findByUsuario", query = "SELECT e FROM Empresa e WHERE e.myUsuario.idUsuario=:idUsuario")})
 public class Empresa implements Serializable {
-    
-    /** Atributos de Clase **/
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private BigInteger idEmpresa;
@@ -50,8 +49,9 @@ public class Empresa implements Serializable {
     @Column
     private String strRazonSocial;
     
-    @Column
+    @Basic
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date dtmFechaFundacion;
     
     @Column
@@ -161,5 +161,8 @@ public class Empresa implements Serializable {
      */
     public void setMyDominio(Dominio myDominio) {
         this.myDominio = myDominio;
+    }
+
+    public Empresa() {
     }
 }

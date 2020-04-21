@@ -32,7 +32,7 @@ public class ServicioDAOImpl implements ServicioDAO{
 
     @Override
     public Servicio traerServicio(Servicio myServicio) {
-        return (Servicio) mySessionFactory.getCurrentSession().get(Servicio.class, myServicio.getIdServicio());
+        return (Servicio) mySessionFactory.getCurrentSession().get(Servicio.class, myServicio.getIdservicio());
     }
 
     @Override

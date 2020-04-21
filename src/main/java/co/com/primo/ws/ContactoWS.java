@@ -77,17 +77,13 @@ public class ContactoWS {
      * @param myContacto
      * @return @ResponseBody
      */
-    @RequestMapping(value="/actualizarContacto",method = RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)    
+    @RequestMapping(value="/actualizarContacto",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)    
     public @ResponseBody ResponseEntity<String> actualizarContacto(@RequestBody Contacto myContacto){
         PrimoMsg msg = new PrimoMsg();
         try{
-            if(myContactoService.actualizarContacto(myContacto) == null){
-                msg.setResponse("Contacto actualizado");
-                msg.setSucces(true);
-            }else{
-                msg.setResponse("Error al actualizar la información del Contacto");
-                msg.setSucces(false);
-            }
+            myContactoService.actualizarContacto(myContacto);
+            msg.setResponse("Contacto actualizado");
+            msg.setSucces(true);
             return new ResponseEntity<>(myGson.toJson(msg),HttpStatus.OK);
         }catch(Exception ex){
             msg.setResponse(ex.getMessage());

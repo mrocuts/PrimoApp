@@ -67,7 +67,7 @@ public class ServicioWS {
         
         //Atributo de Método
         Servicio myServicio = new Servicio();
-        myServicio.setIdServicio(myIdServicio);
+        myServicio.setIdservicio(myIdServicio);
         
         //Consultar la información de la Servicio
         myServicio = myServicioService.traerServicio(myServicio);
