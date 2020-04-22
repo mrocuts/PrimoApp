@@ -8,6 +8,7 @@ package co.com.primo.model;
  */
 import java.io.Serializable;
 import java.math.BigInteger;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -43,7 +44,10 @@ public class SucursalServicio implements Serializable {
     @ManyToOne
     @JoinColumn(name = "IDSERVICIO")
     private Servicio myServicio;
-
+    
+    @Column(name = "DBLVALOR")
+    private Double dblvalor;
+    
     /**
      * Constructor vacio de la Clase SucursalServicio
      */
@@ -101,5 +105,13 @@ public class SucursalServicio implements Serializable {
      */
     public void setMyServicio(Servicio myServicio) {
         this.myServicio = myServicio;
+    }
+
+    public Double getDblvalor() {
+        return dblvalor;
+    }
+
+    public void setDblvalor(Double dblvalor) {
+        this.dblvalor = dblvalor;
     }
 }

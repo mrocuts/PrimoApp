@@ -34,9 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Servicio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "IDSERVICIO")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private BigInteger idservicio;
     @Basic(optional = false)
     @Column(name = "STRNOMBRE")

@@ -8,6 +8,8 @@ package co.com.primo.ws;
  */
 import co.com.primo.model.Servicio;
 import co.com.primo.service.ServicioService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.math.BigInteger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +34,7 @@ public class ServicioWS {
     /** Atributos de Metodo **/
     @Autowired
     private ServicioService myServicioService;
+    private final Gson myGson=new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
 
     /**
      * Función que inserta la información del Servicio en la Base de Datos
@@ -39,22 +42,19 @@ public class ServicioWS {
      * @return @ResponseBody
      */
     @RequestMapping(value="/servicio",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody PrimoMsg agregarServicio(@RequestBody Servicio myServicio){
-        
-        //Atributos de Metodo
+    public @ResponseBody ResponseEntity<String> agregarServicio(@RequestBody Servicio myServicio){
+        System.out.println("HOLAAAAAAAAAAAAAAAAAAAAA");
         PrimoMsg msg = new PrimoMsg();
-        
-        //Insertar la información del Servicio
-        if(myServicioService.agregarServicio(myServicio) == null){
-            //Configurar el mensaje de Exito
+        try{
+            myServicioService.agregarServicio(myServicio);
             msg.setResponse("Servicio creado");
             msg.setSucces(true);
-            return msg;
+            return new ResponseEntity<>(myGson.toJson(msg),HttpStatus.OK);
+        }catch(Exception ex){
+            msg.setResponse(ex.getMessage());
+            msg.setSucces(false);
+            return new ResponseEntity<>(myGson.toJson(msg),HttpStatus.BAD_REQUEST);
         }
-        
-        msg.setResponse("Error al insertar la información del Servicio");
-        msg.setSucces(false);
-        return msg;
     }
 
     /**
