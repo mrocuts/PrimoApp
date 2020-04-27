@@ -29,7 +29,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name="sucursal_servicio")
 @NamedQueries({
-    @NamedQuery(name = "SucursalServicio.findBySucursal", query = "SELECT ss FROM SucursalServicio ss WHERE ss.mySucursal.idSucursal=:idSucursal")})
+    @NamedQuery(name = "SucursalServicio.findBySucursal", query = "SELECT ss FROM SucursalServicio ss WHERE ss.mySucursal.idSucursal=:idSucursal"),
+    @NamedQuery(name = "SucursalServicio.findSucursaByService", query = "SELECT ss FROM SucursalServicio ss WHERE ss.mySucursal.myEmpresa.idEmpresa=:idEmpresa and ss.myServicio.idservicio=:idServicio"),
+    @NamedQuery(name = "SucursalServicio.findService",query = "SELECT ss FROM SucursalServicio ss WHERE ss.mySucursal.myEmpresa.idEmpresa=:idEmpresa and ss.myServicio.idservicio=:idServicio"),})
 public class SucursalServicio implements Serializable {
 
     /** Atributos de Clase **/
@@ -46,7 +48,7 @@ public class SucursalServicio implements Serializable {
     private Servicio myServicio;
     
     @Column(name = "DBLVALOR")
-    private Double dblvalor;
+    private Double dblValor;
     
     /**
      * Constructor vacio de la Clase SucursalServicio
@@ -107,11 +109,11 @@ public class SucursalServicio implements Serializable {
         this.myServicio = myServicio;
     }
 
-    public Double getDblvalor() {
-        return dblvalor;
+    public Double getDblValor() {
+        return dblValor;
     }
 
-    public void setDblvalor(Double dblvalor) {
-        this.dblvalor = dblvalor;
+    public void setDblvalor(Double dblValor) {
+        this.dblValor = dblValor;
     }
 }

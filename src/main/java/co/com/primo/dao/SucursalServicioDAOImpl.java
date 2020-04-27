@@ -34,9 +34,25 @@ public class SucursalServicioDAOImpl implements SucursalServicioDAO{
     }
 
     @Override
-    public List<SucursalServicio> traerServicioPorSucursal(BigInteger myIdSucursal) {
+    public List<SucursalServicio> traerServiciosPorSucursal(BigInteger myIdSucursal) {
         Query q = mySessionFactory.getCurrentSession().getNamedQuery("SucursalServicio.findBySucursal");
         q.setParameter("idSucursal", myIdSucursal);
         return (List<SucursalServicio>) q.list();
+    }
+
+    @Override
+    public List<SucursalServicio> traerSucursalPorServicio(BigInteger myIdEmpresa, BigInteger myIdServicio) {
+        Query q = mySessionFactory.getCurrentSession().getNamedQuery("SucursalServicio.findSucursalByService");
+        q.setParameter("idEmpresa", myIdEmpresa);
+        q.setParameter("idServicio", myIdServicio);
+        return (List<SucursalServicio>) q.list();
+    }
+
+    @Override
+    public SucursalServicio traerServicioPorSucursal(BigInteger myIdEmpresa, BigInteger myIdServicio) {
+        Query q = mySessionFactory.getCurrentSession().getNamedQuery("SucursalServicio.findService");
+        q.setParameter("idEmpresa", myIdEmpresa);
+        q.setParameter("idServicio", myIdServicio);
+        return (SucursalServicio) q.uniqueResult();
     }
 }

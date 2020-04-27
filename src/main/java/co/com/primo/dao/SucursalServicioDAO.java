@@ -18,5 +18,7 @@ import java.util.List;
 */
 public interface SucursalServicioDAO {
     public SucursalServicio agregarSucursalServicio(SucursalServicio mySucursalServicio);
-    public List<SucursalServicio> traerServicioPorSucursal(BigInteger myIdSucursal);
+    public List<SucursalServicio> traerServiciosPorSucursal(BigInteger myIdSucursal);
+    public SucursalServicio traerServicioPorSucursal(BigInteger myIdEmpresa, BigInteger myIdServicio);
+    public List<SucursalServicio> traerSucursalPorServicio(BigInteger myIdSucursal, BigInteger myIdServicio);
 }

@@ -7,10 +7,12 @@ package co.com.primo.ws;
  * IMPORTS
  */
 import co.com.primo.model.Servicio;
+import co.com.primo.model.Sucursal;
 import co.com.primo.service.ServicioService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.math.BigInteger;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -43,7 +45,6 @@ public class ServicioWS {
      */
     @RequestMapping(value="/servicio",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<String> agregarServicio(@RequestBody Servicio myServicio){
-        System.out.println("HOLAAAAAAAAAAAAAAAAAAAAA");
         PrimoMsg msg = new PrimoMsg();
         try{
             myServicioService.agregarServicio(myServicio);
@@ -81,23 +82,34 @@ public class ServicioWS {
      * @param myServicio
      * @return @ResponseBody
      */
-    @RequestMapping(value="/actualizarServicio",method = RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)    
-    public @ResponseBody PrimoMsg actualizarServicio(@RequestBody Servicio myServicio){
-
-        //Atributos de Metodo
+    @RequestMapping(value="/actualizarServicio",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)    
+    public @ResponseBody ResponseEntity<String> actualizarServicio(@RequestBody Servicio myServicio){
         PrimoMsg msg = new PrimoMsg();
-        
-        //Actualizar la información del Servicio
-        if(myServicioService.actualizarServicio(myServicio) == null){
-
-            //Configurar el mensaje de Exito
+        try{
+            myServicioService.actualizarServicio(myServicio);
             msg.setResponse("Servicio actualizado");
             msg.setSucces(true);
-            return msg;
+            return new ResponseEntity<>(myGson.toJson(msg),HttpStatus.OK);
+        }catch(Exception ex){
+            msg.setResponse(ex.getMessage());
+            msg.setSucces(false);
+            return new ResponseEntity<>(myGson.toJson(msg),HttpStatus.BAD_REQUEST);
         }
-        
-        msg.setResponse("Error al actualizar la información del Servicio");
-        msg.setSucces(false);
-        return msg;
+    }
+    
+    /**
+     * Función que trae la información de los Sucursales asosiadas a una empresa
+     * @param myIdEmpresa
+     * @return  ResponseEntity<List<Sucursal>>
+     */
+    @RequestMapping(value="/servicio/empresa/{myIdEmpresa}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)    
+    public ResponseEntity<String> traerSucursalesPorEmpresa(@PathVariable("myIdEmpresa") BigInteger myIdEmpresa){
+        try{
+            List<Servicio> myListEmpresa = myServicioService.traerServiciosPorEmpresa(myIdEmpresa);
+            return new ResponseEntity<>(myGson.toJson(myListEmpresa),HttpStatus.OK);
+        }catch(Exception ex){
+            System.err.println(""+ex.getLocalizedMessage());
+            return new ResponseEntity<>(myGson.toJson(ex),HttpStatus.BAD_REQUEST);
+        }
     }
 }

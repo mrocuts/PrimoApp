@@ -7,6 +7,9 @@ package co.com.primo.dao;
  * IMPORTS
  */
 import co.com.primo.model.Servicio;
+import java.math.BigInteger;
+import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -40,4 +43,11 @@ public class ServicioDAOImpl implements ServicioDAO{
         mySessionFactory.getCurrentSession().update(myServicio);
         return myServicio;
     }    
+
+    @Override
+    public List<Servicio> traerServiciosPorEmpresa(BigInteger idEmpresa) {
+        Query q = mySessionFactory.getCurrentSession().getNamedQuery("Servicio.findByCompany");
+        q.setParameter("idEmpresa", idEmpresa);
+        return (List<Servicio>) q.list();
+    }
 }

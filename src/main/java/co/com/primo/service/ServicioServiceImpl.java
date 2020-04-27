@@ -8,6 +8,8 @@ package co.com.primo.service;
  */
 import co.com.primo.dao.ServicioDAO;
 import co.com.primo.model.Servicio;
+import java.math.BigInteger;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,5 +41,10 @@ public class ServicioServiceImpl implements ServicioService{
     @Override
     public Servicio actualizarServicio(Servicio myServicio) {
         return myServicioDAO.actualizarServicio(myServicio);
+    }
+
+    @Override
+    public List<Servicio> traerServiciosPorEmpresa(BigInteger idEmpresa) {
+        return myServicioDAO.traerServiciosPorEmpresa(idEmpresa);
     }
 }

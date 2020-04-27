@@ -45,9 +45,6 @@ public class SucursalWS {
     @Autowired
     private SucursalTelefonoService mySucursalTelefonoService;
 
-    @Autowired
-    private SucursalServicioService mySucursalServicioService;
-
     private final Gson myGson=new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
     
     /**
@@ -143,47 +140,5 @@ public class SucursalWS {
         
         //Retornar el resultado de la consulta
         return new ResponseEntity<>(myListSucursalTelefono,HttpStatus.OK);
-    }
-
-    /**
-     * Función que asocia del información de la Sucursal y el Servicio
-     * @param myIdSucursal
-     * @param myIdServicio
-     * @return @ResponseBody
-     */
-    @RequestMapping(value="/sucursalServicio/{myIdSucursal}/{myIdServicio}",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody PrimoMsg agregarSucursalServicio(@PathVariable("myIdSucursal") BigInteger myIdSucursal, 
-                                                          @PathVariable("myIdServicio") BigInteger myIdServicio){
-        
-        //Atributos de Metodo
-        PrimoMsg msg = new PrimoMsg();
-        SucursalServicio mySucursalServicio = new SucursalServicio(new Sucursal(myIdSucursal), new Servicio(myIdServicio));
-        
-        //Insertar la información del Sucursal
-        if(mySucursalServicioService.agregarSucursalServicio(mySucursalServicio) == null){
-            //Configurar el mensaje de Exito
-            msg.setResponse("El servicio de sucursal creado");
-            msg.setSucces(true);
-            return msg;
-        }
-        
-        msg.setResponse("Error al insertar la información del servicio de la sucursal");
-        msg.setSucces(false);
-        return msg;
-    }
-    
-    /**
-     * Función que trae la información de los servicios por Sucursal
-     * @param myIdSucursal
-     * @return  ResponseEntity<List<SucursalServicio>>
-     */
-    @RequestMapping(value="/sucursalServicio/{myIdSucursal}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)    
-    public ResponseEntity<List<SucursalServicio>> traerServiciosPorSucursal(@PathVariable("myIdSucursal") BigInteger myIdSucursal){
-        
-        //Consultar la lista de Sucursals asociadas a una Empresa
-        List<SucursalServicio> myListSucursalServicio = mySucursalServicioService.traerServicioPorSucursal(myIdSucursal);
-        
-        //Retornar el resultado de la consulta
-        return new ResponseEntity<>(myListSucursalServicio,HttpStatus.OK);
     }
 }

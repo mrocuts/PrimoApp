@@ -8,7 +8,6 @@ package co.com.primo.service;
  */
 import co.com.primo.dao.SucursalServicioDAO;
 import co.com.primo.model.SucursalServicio;
-import co.com.primo.model.SucursalServicio;
 import java.math.BigInteger;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,17 @@ public class SucursalServicioServiceImpl implements SucursalServicioService{
     }    
 
     @Override
-    public List<SucursalServicio> traerServicioPorSucursal(BigInteger myIdSucursal) {
-        return mySucursalServicioDAO.traerServicioPorSucursal(myIdSucursal);
+    public List<SucursalServicio> traerServiciosPorSucursal(BigInteger myIdSucursal) {
+        return mySucursalServicioDAO.traerServiciosPorSucursal(myIdSucursal);
+    }
+
+    @Override
+    public List<SucursalServicio> traerSucursalPorServicio(BigInteger myIdEmpresa, BigInteger myIdServicio) {
+        return mySucursalServicioDAO.traerSucursalPorServicio(myIdEmpresa, myIdServicio);
+    }
+
+    @Override
+    public SucursalServicio traerServicio(BigInteger mySucursalServicio, BigInteger myIdServicio) {
+        return mySucursalServicioDAO.traerServicioPorSucursal(mySucursalServicio, myIdServicio);
     }
 }

@@ -30,7 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Servicio.findAll", query = "SELECT s FROM Servicio s"),
     @NamedQuery(name = "Servicio.findByIdservicio", query = "SELECT s FROM Servicio s WHERE s.idservicio = :idservicio"),
-    @NamedQuery(name = "Servicio.findByStrnombre", query = "SELECT s FROM Servicio s WHERE s.strnombre = :strnombre")})
+    @NamedQuery(name = "Servicio.findByStrnombre", query = "SELECT s FROM Servicio s WHERE s.strnombre = :strnombre"),
+    @NamedQuery(name = "Servicio.findByCompany", query = "SELECT s FROM Servicio s WHERE s.idempresa.idEmpresa = :idEmpresa")})
 public class Servicio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,6 +46,8 @@ public class Servicio implements Serializable {
     @JoinColumn(name = "IDEMPRESA", referencedColumnName = "IDEMPRESA")
     @ManyToOne(optional = false)
     private Empresa idempresa;
+    @Column(name="ISACTIVE")
+    private boolean bitActivo;
 
     public Servicio() {
     }
@@ -88,6 +91,14 @@ public class Servicio implements Serializable {
 
     public void setIdempresa(Empresa idempresa) {
         this.idempresa = idempresa;
+    }
+
+    public boolean isBitActivo() {
+        return bitActivo;
+    }
+
+    public void setBitActivo(boolean bitActivo) {
+        this.bitActivo = bitActivo;
     }
 
     @Override
