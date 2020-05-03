@@ -19,9 +19,9 @@ import java.util.List;
 */
 public interface SucursalServicioService {
     public SucursalServicio agregarSucursalServicio(SucursalServicio mySucursalServicio);
-    public List<SucursalServicio> traerServiciosPorSucursal(BigInteger myIdSucursal);
+    public List<SucursalServicio> traerServiciosPorSucursal(BigInteger myIdEmpresa, BigInteger myIdSucursal);
     public List<Sucursal> traerSucursalPorServicio(BigInteger myIdEmpresa, BigInteger myIdServicio);
-    public SucursalServicio traerServicio(BigInteger mySucursalServicio, BigInteger myIdServicio);
-
     public void borrarSucursalPorServicio(BigInteger myIdEmpresa, BigInteger myIdSucursal, BigInteger myIdServicio);
+
+    public Object actualizarSucursalServicio(SucursalServicio mySucursalServicio);
 }

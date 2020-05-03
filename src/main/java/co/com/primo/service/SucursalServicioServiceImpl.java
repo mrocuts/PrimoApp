@@ -35,22 +35,22 @@ public class SucursalServicioServiceImpl implements SucursalServicioService{
     }    
 
     @Override
-    public List<SucursalServicio> traerServiciosPorSucursal(BigInteger myIdSucursal) {
-        return mySucursalServicioDAO.traerServiciosPorSucursal(myIdSucursal);
-    }
-
-    @Override
     public List<Sucursal> traerSucursalPorServicio(BigInteger myIdEmpresa, BigInteger myIdServicio) {
         return mySucursalServicioDAO.traerSucursalPorServicio(myIdEmpresa, myIdServicio);
     }
 
     @Override
-    public SucursalServicio traerServicio(BigInteger mySucursalServicio, BigInteger myIdServicio) {
-        return mySucursalServicioDAO.traerServicioPorSucursal(mySucursalServicio, myIdServicio);
+    public void borrarSucursalPorServicio(BigInteger myIdEmpresa, BigInteger myIdSucursal, BigInteger myIdServicio) {
+        mySucursalServicioDAO.borrarServicioPorSucursal(myIdEmpresa, myIdSucursal, myIdServicio);
     }
 
     @Override
-    public void borrarSucursalPorServicio(BigInteger myIdEmpresa, BigInteger myIdSucursal, BigInteger myIdServicio) {
-        mySucursalServicioDAO.borrarServicioPorSucursal(myIdEmpresa, myIdSucursal, myIdServicio);
+    public List<SucursalServicio> traerServiciosPorSucursal(BigInteger myIdEmpresa, BigInteger myIdSucursal) {
+        return mySucursalServicioDAO.traerServiciosPorSucursal(myIdEmpresa, myIdSucursal);
+    }
+
+    @Override
+    public Object actualizarSucursalServicio(SucursalServicio mySucursalServicio) {
+        return mySucursalServicioDAO.actualizarServicioPorSucursal(mySucursalServicio);
     }
 }

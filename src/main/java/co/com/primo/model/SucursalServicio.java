@@ -29,7 +29,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="sucursal_servicio")
 @NamedQueries({
-    @NamedQuery(name = "SucursalServicio.findBySucursal", query = "SELECT ss FROM SucursalServicio ss WHERE ss.mySucursal.idSucursal=:idSucursal"),
+    @NamedQuery(name = "SucursalServicio.findBySucursal", query = "SELECT ss FROM SucursalServicio ss WHERE ss.mySucursal.myEmpresa.idEmpresa=:idEmpresa and ss.mySucursal.idSucursal=:idSucursal"),
     @NamedQuery(name = "SucursalServicio.findSucursalByService", query = "SELECT ss.mySucursal FROM SucursalServicio ss WHERE ss.mySucursal.myEmpresa.idEmpresa=:idEmpresa and ss.myServicio.idservicio=:idServicio"),
     @NamedQuery(name = "SucursalServicio.findService",query = "SELECT ss FROM SucursalServicio ss WHERE ss.mySucursal.myEmpresa.idEmpresa=:idEmpresa and ss.myServicio.idservicio=:idServicio"),
     @NamedQuery(name = "SucursalServicio.specificService",query = "SELECT ss FROM SucursalServicio ss WHERE ss.mySucursal.myEmpresa.idEmpresa=:idEmpresa and ss.mySucursal.idSucursal=:idSucursal and ss.myServicio.idservicio=:idServicio")})
