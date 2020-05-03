@@ -7,6 +7,7 @@ package co.com.primo.service;
  * IMPORTS
  */
 import co.com.primo.dao.SucursalServicioDAO;
+import co.com.primo.model.Sucursal;
 import co.com.primo.model.SucursalServicio;
 import java.math.BigInteger;
 import java.util.List;
@@ -39,12 +40,17 @@ public class SucursalServicioServiceImpl implements SucursalServicioService{
     }
 
     @Override
-    public List<SucursalServicio> traerSucursalPorServicio(BigInteger myIdEmpresa, BigInteger myIdServicio) {
+    public List<Sucursal> traerSucursalPorServicio(BigInteger myIdEmpresa, BigInteger myIdServicio) {
         return mySucursalServicioDAO.traerSucursalPorServicio(myIdEmpresa, myIdServicio);
     }
 
     @Override
     public SucursalServicio traerServicio(BigInteger mySucursalServicio, BigInteger myIdServicio) {
         return mySucursalServicioDAO.traerServicioPorSucursal(mySucursalServicio, myIdServicio);
+    }
+
+    @Override
+    public void borrarSucursalPorServicio(BigInteger myIdEmpresa, BigInteger myIdSucursal, BigInteger myIdServicio) {
+        mySucursalServicioDAO.borrarServicioPorSucursal(myIdEmpresa, myIdSucursal, myIdServicio);
     }
 }

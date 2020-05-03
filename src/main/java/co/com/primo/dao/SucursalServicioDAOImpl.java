@@ -6,6 +6,7 @@ package co.com.primo.dao;
 /*
  * IMPORTS
  */
+import co.com.primo.model.Sucursal;
 import co.com.primo.model.SucursalServicio;
 import java.math.BigInteger;
 import java.util.List;
@@ -41,11 +42,11 @@ public class SucursalServicioDAOImpl implements SucursalServicioDAO{
     }
 
     @Override
-    public List<SucursalServicio> traerSucursalPorServicio(BigInteger myIdEmpresa, BigInteger myIdServicio) {
+    public List<Sucursal> traerSucursalPorServicio(BigInteger myIdEmpresa, BigInteger myIdServicio) {
         Query q = mySessionFactory.getCurrentSession().getNamedQuery("SucursalServicio.findSucursalByService");
         q.setParameter("idEmpresa", myIdEmpresa);
         q.setParameter("idServicio", myIdServicio);
-        return (List<SucursalServicio>) q.list();
+        return (List<Sucursal>) q.list();
     }
 
     @Override
@@ -54,5 +55,15 @@ public class SucursalServicioDAOImpl implements SucursalServicioDAO{
         q.setParameter("idEmpresa", myIdEmpresa);
         q.setParameter("idServicio", myIdServicio);
         return (SucursalServicio) q.uniqueResult();
+    }
+
+    @Override
+    public void borrarServicioPorSucursal(BigInteger myIdEmpresa, BigInteger myIdSucursal, BigInteger myIdServicio) {
+        Query q = mySessionFactory.getCurrentSession().getNamedQuery("SucursalServicio.specificService");
+        q.setParameter("idEmpresa", myIdEmpresa);
+        q.setParameter("idSucursal", myIdSucursal);
+        q.setParameter("idServicio", myIdServicio);
+        System.out.println("QUERY: "+q.getQueryString());
+        mySessionFactory.getCurrentSession().delete((SucursalServicio)q.uniqueResult());
     }
 }
