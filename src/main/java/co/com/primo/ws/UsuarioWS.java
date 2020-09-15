@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 21/07/2019
  */
 @RestController
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 public class UsuarioWS {
 
     @Autowired
@@ -73,7 +75,7 @@ public class UsuarioWS {
     }
 
     @RequestMapping(value="/login/{usuario}/{password}/{intTipoUsuario}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)    
-    public ResponseEntity<Usuario> login(@PathVariable("usuario") String myUser,@PathVariable("password") String myPass,
+    public Usuario login(@PathVariable("usuario") String myUser,@PathVariable("password") String myPass,
                                          @PathVariable("intTipoUsuario") String intTipoUsuario){
         //Atributos de Metodo
         Usuario myUsuario = new Usuario();
@@ -84,7 +86,8 @@ public class UsuarioWS {
         myUsuario.setStrUsuario(myUser);
         myUsuario.setStrPassword(DigestUtils.md5Hex(myPass));
         myUsuario.setIntTipoUsuario(new BigInteger(intTipoUsuario));
-        
+        System.out.println("USUARIO: "+myUser+" "+myPass+" "+intTipoUsuario);
+        System.out.println("Contraseña cifrada: "+myUsuario.getStrPassword());
         //Traer el Usuario
         myUsuarioAuth = myUsuarioService.login(myUsuario);
         
@@ -95,7 +98,7 @@ public class UsuarioWS {
                 myUsuarioAuth.setIntNumIntentos(0);
                 
                 //Actualizar el usuario
-                myUsuarioService.actualizarUsuario(myUsuarioAuth);                
+               // myUsuarioService.actualizarUsuario(myUsuarioAuth);                
             }
             
             //Crear el objeto Log
@@ -123,11 +126,11 @@ public class UsuarioWS {
                 }
                 
                 //Actualizar el usuario
-                myUsuarioService.actualizarUsuario(myUsuarioVerificado);
+                //myUsuarioService.actualizarUsuario(myUsuarioVerificado);
             }
         }
         
-        return new ResponseEntity<Usuario>(myUsuarioAuth,HttpStatus.OK);
+        return myUsuarioAuth;
     }
 
     @RequestMapping(value="/recuperar/{usuario}/",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)    
