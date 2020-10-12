@@ -30,7 +30,7 @@ public class Log {
     
     /** Atributos de Clase **/
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private BigInteger idLog;
     
     @Column

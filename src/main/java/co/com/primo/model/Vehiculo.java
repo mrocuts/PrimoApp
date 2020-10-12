@@ -34,7 +34,7 @@ public class Vehiculo implements Serializable {
     
     /** Atributos de Clase **/
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private BigInteger idVehiculo;
 
     @Column
@@ -67,6 +67,9 @@ public class Vehiculo implements Serializable {
     @Column
     private String strTransmision;
     
+    @Column
+    private String strPathSOAT;
+
     @ManyToOne
     @JoinColumn(name = "IDTIPOVEHICULO")
     private TipoVehiculo myTipoVehiculo;
@@ -203,6 +206,20 @@ public class Vehiculo implements Serializable {
      */
     public void setStrTransmision(String strTransmision) {
         this.strTransmision = strTransmision;
+    }
+
+    /**
+     * @return the strPathSOAT
+     */
+    public String getStrPathSOAT() {
+        return strPathSOAT;
+    }
+
+    /**
+     * @param strPathSOAT the strPathSOAT to set
+     */
+    public void setStrPathSOAT(String strPathSOAT) {
+        this.strPathSOAT = strPathSOAT;
     }
 
     /**

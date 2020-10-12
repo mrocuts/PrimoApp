@@ -30,7 +30,7 @@ public class Telefono implements Serializable {
 
     /** Atributos de Clase **/
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private BigInteger idTelefono;
 
     @Column
