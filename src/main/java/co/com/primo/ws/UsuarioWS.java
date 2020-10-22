@@ -52,6 +52,8 @@ public class UsuarioWS {
     @RequestMapping(value="/usuario",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)    
     public @ResponseBody PrimoMsg insertarUsuario(@RequestBody Usuario user){
         PrimoMsg msg = new PrimoMsg();
+        SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
         System.out.println("Servicio invocado... "+user.getStrUsuario());
         if(myUsuarioService.traerUsuario(user.getStrUsuario())== null){
             user.setStrPassword(DigestUtils.md5Hex(user.getStrPassword()));
@@ -60,7 +62,7 @@ public class UsuarioWS {
             //Verificar el Usuario Creado y que sea de tipo Usuario
             if(myUsuarioCreado != null && myUsuarioCreado.getIntTipoUsuario().intValue() == 2){
                 //Crear el Objeto Garaje
-                myGarajeService.agregarGaraje(new Garaje(new Date().toString(), true, myUsuarioCreado));
+                myGarajeService.agregarGaraje(new Garaje(myFormat.format(new Date()), true, myUsuarioCreado));
                 System.out.println("Garaje registrado con exito.");
             }
             
