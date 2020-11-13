@@ -21,12 +21,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
         
 /**
  *
  * @author Usuario
  */
 @RestController
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 public class PersonaWS {
     
     @Autowired

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 23/09/2019
  */
 @RestController
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 public class EmpresaWS {
 
     /** Atributos de Metodo **/
@@ -45,14 +47,18 @@ public class EmpresaWS {
     @RequestMapping(value="/empresa",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<String> agregarEmpresa(@RequestBody Empresa myEmpresa){
         PrimoMsg msg = new PrimoMsg();
+        System.out.println("Creando empresa...");
         try{
             if(myEmpresaService.traerEmpresa(myEmpresa.getStrIdentificacion())== null){
+                System.out.println("Empresa NO EXISTE...");
                 myEmpresaService.agregarEmpresa(myEmpresa);
                 msg.setResponse("Empresa creada");
                 msg.setSucces(true);
             }
             return new ResponseEntity<>(myGson.toJson(msg),HttpStatus.OK);
         }catch(Exception ex){
+            System.out.println("HOLA HUBO UN ERROR: "+ex.getMessage());
+            System.err.append(ex.getLocalizedMessage());
             msg.setResponse(ex.getMessage());
             msg.setSucces(false);
             return new ResponseEntity<>(myGson.toJson(msg),HttpStatus.BAD_REQUEST);
@@ -65,9 +71,12 @@ public class EmpresaWS {
      * @return ResponseEntity<String>
      */
     @RequestMapping(value="/empresa/{myIdUsuario}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)    
-    public ResponseEntity<String> traerEmpresasPorUsuario(@PathVariable("myIdUsuario") BigInteger myIdUsuario){
+    public Empresa traerEmpresasPorUsuario(@PathVariable("myIdUsuario") BigInteger myIdUsuario){
         List<Empresa> myListEmpresa = myEmpresaService.traerEmpresaPorUsuario(myIdUsuario);
-        return new ResponseEntity<>(myGson.toJson(myListEmpresa),HttpStatus.OK);
+        if(!myListEmpresa.isEmpty()){
+            return myListEmpresa.get(0);
+        }
+        return null;
     }
 
     /**

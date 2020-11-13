@@ -29,7 +29,7 @@ public class EmpresaDAOImpl implements EmpresaDAO {
 
     @Override
     public Empresa agregarEmpresa(Empresa myEmpresa) {
-        mySessionFactory.getCurrentSession().saveOrUpdate(myEmpresa);
+        mySessionFactory.getCurrentSession().save(myEmpresa);
         return myEmpresa;
     }
 
